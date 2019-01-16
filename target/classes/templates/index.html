@@ -1,0 +1,20 @@
+
+<!DOCTYPE html>
+
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="layout/layout"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
+
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container main-content">
+        <div class="row">
+            <p th:text="${user}"></p>
+            <p th:text="${idea}"></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
