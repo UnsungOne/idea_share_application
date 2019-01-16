@@ -1,18 +1,38 @@
-
 <!DOCTYPE html>
-
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/layout"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
-
 </head>
 <body>
 <div layout:fragment="content">
     <div class="container main-content">
         <div class="row">
-            <p th:text="${user}"></p>
-            <p th:text="${idea}"></p>
+            <table class="table">
+                <thead>
+                <tr>
+
+                    <th scope="col">Tytuł</th>
+                    <th scope="col">Opis</th>
+                    <th scope="col">Data utworzenia</th>
+                    <th scope="col">Wynik</th>
+                    <th scope="col">Akcje</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <th:block th:each="idea : ${idea}">
+                    <tr>
+                        <td th:text="${idea.title}"></td>
+                        <td th:text="${idea.description}"></td>
+                        <td th:text="${idea.addedAt}"></td>
+                        <td th:text="${idea.score}"></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+
         </div>
     </div>
 </div>

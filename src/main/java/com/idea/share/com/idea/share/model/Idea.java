@@ -9,16 +9,18 @@ public class Idea {
     private String title;
     private String description;
     private LocalDate addedAt;
+    private int score;
     private boolean active;
 
     public Idea() {
     }
 
-    public Idea(Long id, String title, String description, LocalDate addedAt, boolean active) {
+    public Idea(Long id, String title, String description, LocalDate addedAt, int score, boolean active) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.addedAt = addedAt;
+        this.score = score;
         this.active = active;
     }
 
@@ -54,6 +56,14 @@ public class Idea {
         this.addedAt = addedAt;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     public boolean isActive() {
         return active;
     }
@@ -67,7 +77,8 @@ public class Idea {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Idea idea = (Idea) o;
-        return active == idea.active &&
+        return score == idea.score &&
+                active == idea.active &&
                 Objects.equals(id, idea.id) &&
                 Objects.equals(title, idea.title) &&
                 Objects.equals(description, idea.description) &&
@@ -76,7 +87,7 @@ public class Idea {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, addedAt, active);
+        return Objects.hash(id, title, description, addedAt, score, active);
     }
 
     @Override
@@ -86,6 +97,7 @@ public class Idea {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", addedAt=" + addedAt +
+                ", score=" + score +
                 ", active=" + active +
                 '}';
     }

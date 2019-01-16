@@ -14,8 +14,7 @@ public class MainController {
 
     @GetMapping("/")
     public String getMainPage(Model model) {
-        model.addAttribute("user", new User((long) 1, "Testowy", "Testowy", "Testowy"));
-        model.addAttribute("idea", new Idea((long) 1, "Idea", "Idea", null, true));
+        model.addAttribute("idea", new Idea((long) 1, "Idea", "Idea", null, 23,true));
         return "index";
 
     }
