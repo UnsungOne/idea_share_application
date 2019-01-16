@@ -1,6 +1,5 @@
-package com.idea.share.com.idea.share.service;
+package com.idea.share.com.idea.share.user;
 
-import com.idea.share.com.idea.share.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
