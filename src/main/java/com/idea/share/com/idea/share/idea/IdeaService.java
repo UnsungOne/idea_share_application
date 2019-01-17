@@ -43,12 +43,17 @@ public class IdeaService {
     }
 
 
-//    public void rateIdeaUp(Integer ideaId) {
-//        ideaRepository.rateIdeaUp(ideaId);
-//    }
-//
-//    public void rateIdeaDown(Integer ideaId) {
-//        ideaRepository.rateIdeaDown(ideaId);
-//
-//    }
+    public void rateIdeaUp(Integer ideaId) {
+        ideaRepository.rateIdeaUp(ideaId);
+    }
+
+    public void rateIdeaDown(Integer ideaId) {
+        ideaRepository.rateIdeaDown(ideaId);
+
+    }
+
+    public void editIdea(){
+
+    }
+
 }
