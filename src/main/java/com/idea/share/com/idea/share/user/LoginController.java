@@ -5,12 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class RegistrationController {
+public class LoginController {
 
-    @GetMapping("/register")
-    String getRegistrationPage(Model model) {
-        model.addAttribute("user", new User());
-        return "registration";
+    @GetMapping("/login")
+    String getLoginPage(Model model){
+       return "login";
     }
 
 }
