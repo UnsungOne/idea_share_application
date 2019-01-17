@@ -11,7 +11,7 @@ import org.springframework.validation.Validator;
 public class IdeaDTOValidator implements Validator {
     @Override
     public boolean supports(Class<?> aClass) {
-        return IdeaDTO.class.equals(aClass);
+        return IdeaDTO.class.isAssignableFrom(aClass);
     }
 
     @Override

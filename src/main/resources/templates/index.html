@@ -32,7 +32,7 @@
                             <div class="btn-group">
                                 <button class="btn btn-primary btn-sm glyphicon glyphicon-plus"></button>
                                 <button class="btn btn-danger btn-sm glyphicon glyphicon-minus"></button>
-                                <button class="btn btn-default btn-sm glyphicon glyphicon-edit"></button>
+                                <button th:class="${idea.id % 2==0} ? 'btn btn-default btn-sm glyphicon glyphicon-edit': 'hidden'"></button>
                             </div>
                         </td>
                     </tr>

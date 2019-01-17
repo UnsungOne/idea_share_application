@@ -8,9 +8,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 
 
 @Data
@@ -28,7 +25,7 @@ public class Idea {
     private LocalDateTime addedAt;
     private int score;
     private boolean active;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_user")
     private User user;
 
