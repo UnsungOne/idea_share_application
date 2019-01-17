@@ -27,4 +27,19 @@ public class IdeaService {
         ideaRepository.save(ModelMapper.map(ideaDTO));
     }
 
+//    public void rateIdea(Integer id, IdeaRate rate) {
+//        if (rate.equals(IdeaRate.UP)) {
+//            ideaRepository.rateIdeaUp(id);
+//        } else if (rate.equals(IdeaRate.DOWN)) {
+//            ideaRepository.rateIdeaDown(id);
+//        }
+//    }
+
+    public boolean isIdeaAuthor() {
+         return fetchAllIdeas().stream()
+                 .filter(idea -> idea.getTitle().contains("data"))
+                 .forEach(System.out::println);
+        }
+
+    }
 }

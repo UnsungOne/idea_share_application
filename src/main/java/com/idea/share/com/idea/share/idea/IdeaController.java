@@ -33,6 +33,7 @@ public class IdeaController {
 
     @GetMapping("/")
     public String getMainPage(Model model) {
+        model.addAttribute("isAuthor", ideaService.isIdeaAuthor());
         model.addAttribute("idea", ideaService.fetchAllIdeas());
         return "index";
 

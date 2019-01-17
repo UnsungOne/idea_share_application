@@ -33,6 +33,8 @@
                                 <button class="btn btn-primary btn-sm glyphicon glyphicon-plus"></button>
                                 <button class="btn btn-danger btn-sm glyphicon glyphicon-minus"></button>
                                 <button class="btn btn-default btn-sm glyphicon glyphicon-edit"></button>
+                                <button th:class="${isAuthor} ? 'btn btn-default btn-sm glyphicon glyphicon-cloud' : 'btn btn-default btn-sm glyphicon glyphicon-edit'"></button>
+                            <p th:text="${isAuthor} ? 'OK' : 'NO'"></p>
                             </div>
                         </td>
                     </tr>
