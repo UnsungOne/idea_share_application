@@ -12,6 +12,7 @@
             <table class="table">
                 <thead>
                 <tr>
+                    <th scope="col">Id</th>
                     <th scope="col">Tytuł</th>
                     <th scope="col">Opis</th>
                     <th scope="col">Data utworzenia</th>
@@ -22,6 +23,7 @@
                 <tbody>
                 <th:block th:each="idea : ${idea}">
                     <tr>
+                        <td th:text="${idea.id}"></td>
                         <td th:text="${idea.title}"></td>
                         <td th:text="${idea.description}"></td>
                         <td th:text="${idea.addedAt}"></td>

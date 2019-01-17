@@ -19,11 +19,4 @@ public class IdeaDTO  {
     private int score;
     private boolean active;
 
-    public IdeaDTO(String title, String description, LocalDateTime addedAt, int score, boolean active) {
-        this.title = title;
-        this.description = description;
-        this.addedAt = addedAt;
-        this.score = score;
-        this.active = active;
-    }
 }

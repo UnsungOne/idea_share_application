@@ -24,12 +24,12 @@
                     <form th:action="@{/addIdea}" method="post" th:object="${idea}">
                         <div class="form-group">
                             <input type="text" th:field="*{title}" class="form-control" placeholder="Tytuł">
-                            <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Name Error</div>
+                            <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-danger">Name Error</div>
                         </div>
                         <div class="form-group">
                             <textarea type="text" th:field="*{description}" class="form-control"
                                       placeholder="Opis"></textarea>
-                            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Name Error</div>
+                            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger">>Name Error</div>
                         </div>
                         <div class="text-center">
                             <button th:type="submit" class=" btn btn-primary">Dodaj pomysł</button>

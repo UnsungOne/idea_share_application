@@ -1,6 +1,5 @@
 package com.idea.share.com.idea.share.validator;
 
-import com.idea.share.com.idea.share.idea.Idea;
 import com.idea.share.com.idea.share.idea.IdeaDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -17,8 +16,16 @@ public class IdeaDTOValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
+        IdeaDTO ideaDTO = (IdeaDTO) o;
+        ValidationUtils.rejectIfEmpty(errors, "title", "idea.validator.field.notEmpty");
+        ValidationUtils.rejectIfEmpty(errors, "description", "idea.validator.field.notEmpty");
 
-        ValidationUtils.rejectIfEmpty(errors,"title", "idea.validator.field.notEmpty");
-        ValidationUtils.rejectIfEmpty(errors,"description", "idea.validator.field.notEmpty");
+        if (ideaDTO.getTitle().length() > 255) {
+            errors.rejectValue("title", "idea.validator.field.tooLong");
         }
+        if (ideaDTO.getDescription().length() > 255) {
+            errors.rejectValue("description", "idea.validator.field.tooLong");
+        }
+
     }
+}

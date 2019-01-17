@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class IdeaController {
 
-    private IdeaService ideaService;
-    private Validator ideaDTOValidator;
+    private final IdeaService ideaService;
+    private final Validator ideaDTOValidator;
 
     @InitBinder
     public void initBinding(WebDataBinder binder){

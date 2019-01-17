@@ -2,14 +2,15 @@ package com.idea.share.com.idea.share.validator;
 
 import com.idea.share.com.idea.share.user.User;
 import com.idea.share.com.idea.share.user.UserDTO;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-public class UserValidator implements Validator {
+@Component("userDTOValidator")
+public class UserDTOValidator implements Validator {
 
     private final Pattern PASSSWORD_LENGTH = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$");
 

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="layout/layout"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+        layout:decorate="layout/layout"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
 </head>
 <body>
 <div layout:fragment="content">
@@ -14,36 +14,42 @@
                     Zarejestruj się — za darmo!
                 </h2>
                 <h4>
-                   Będziesz mógł dodawać, edytować swoje pomysły oraz oceniać dodane przez inne osoby.
+                    Będziesz mógł dodawać, edytować swoje pomysły oraz oceniać dodane przez inne osoby.
                 </h4>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="myform form">
-                    <form action="" method="post" name="registration">
+                    <form th:action="@{/registerUser}" method="post" th:object="${user}">
                         <div class="form-group">
-                            <input type="text" name="name" id="name" class="form-control" placeholder="Imię">
+                            <input type="text" th:field="*{name}" class="form-control" placeholder="Imię">
+                            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Name Error</div>
                         </div>
                         <div class="form-group">
-                            <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+                            <input type="email" th:field="*{email}" class="form-control" placeholder="Email">
+                            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger">Name Error</div>
                         </div>
                         <div class="form-group">
-                            <input type="password" min="0" name="password" id="password" class="form-control" placeholder="Hasło">
+                            <input type="password" th:field="*{password}" class="form-control" placeholder="Hasło">
+                            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger">Name Error</div>
                         </div>
                         <div class="form-group">
-                            <input type="password" min="0" name="repeatPassword" id="repeatPassword" class="form-control" placeholder="Powtórz hasło">
+                            <input type="password" th:field="*{repeatPassword}" class="form-control" placeholder="Powtórz hasło">
+                            <div th:if="${#fields.hasErrors('repeatPassword')}" th:errors="*{repeatPassword}" class="text-danger">Name Error</div>
                         </div>
                         <div class="text-center">
                             <button type="submit" class=" btn btn-primary">Utwórz konto</button>
                         </div>
                         <hr>
-                        <p class="small mt-3">Zakładając konto akceptujesz <a href="#">warunki </a> i <a href="#">politykę prywatności</a> serwisu Idea Share Application.
+                        <p class="small mt-3">Zakładając konto akceptujesz <a href="#">warunki </a> i <a href="#">politykę
+                            prywatności</a> serwisu Idea Share Application.
                         </p>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
