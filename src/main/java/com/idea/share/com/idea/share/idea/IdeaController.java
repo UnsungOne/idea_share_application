@@ -9,10 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class IdeaController {
@@ -32,9 +29,9 @@ public class IdeaController {
     }
 
     @GetMapping("/")
-    public String getMainPage(Model model) {
-        model.addAttribute("isAuthor", ideaService.isIdeaAuthor());
-        model.addAttribute("idea", ideaService.fetchAllIdeas());
+    public String getMainPage(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+    @RequestParam(value = "limit", defaultValue = "10") int limit) {
+        model.addAttribute("idea", ideaService.fetchAllIdeas(page, limit));
         return "index";
 
     }
@@ -43,7 +40,6 @@ public class IdeaController {
     public String getIdeaAddingPage(Model model) {
         model.addAttribute("idea", new IdeaDTO());
         return "add_idea";
-
     }
 
     @PostMapping("/addIdea")
@@ -55,6 +51,11 @@ public class IdeaController {
 
         ideaService.addIdea(ideaDTO);
         return "redirect:/";
-
     }
+
+//    @GetMapping(value = "/idea/{id}/rate")
+//    public String rateMovie(Model model, IdeaRate rate, @PathVariable Integer id){
+//        return "redirect:/";
+//    }
+
 }
