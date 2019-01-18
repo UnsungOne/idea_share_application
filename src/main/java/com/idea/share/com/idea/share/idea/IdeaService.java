@@ -1,16 +1,13 @@
 package com.idea.share.com.idea.share.idea;
 
 import com.idea.share.com.idea.share.dto.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class IdeaService {
@@ -22,18 +19,11 @@ public class IdeaService {
         this.ideaRepository = ideaRepository;
     }
 
-    public List<IdeaDTO> fetchAllIdeas(int page, int limit) {
-        List<IdeaDTO> returnValue = new ArrayList<>();
-        Pageable pageableRequest = PageRequest.of(page, limit);
-        Page<Idea> ideas = ideaRepository.findAll(pageableRequest);
-        List<Idea> ideaEntities = ideas.getContent();
-        for (Idea Idea : ideaEntities) {
-            IdeaDTO userDto = new IdeaDTO();
-            BeanUtils.copyProperties(Idea, userDto);
-            returnValue.add(userDto);
-        }
-
-        return returnValue;
+    public Page<IdeaDTO> fetchAllIdeas(int page, int limit) {
+        Sort sortOnAddedAt = new Sort(Sort.Direction.DESC, "addedAt");
+        Page<Idea> ideaEntities = ideaRepository.findAll(PageRequest.of(page, limit, sortOnAddedAt));
+        Page<IdeaDTO> ideaDTO = ideaEntities.map(ModelMapper::map);
+        return ideaDTO;
     }
 
     public void addIdea(IdeaDTO ideaDTO) {

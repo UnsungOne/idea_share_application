@@ -13,11 +13,24 @@ public class ModelMapper {
 
     public static Idea map(IdeaDTO ideaDTO) {
         return Idea.builder()
+                .id(ideaDTO.getId())
                 .title(ideaDTO.getTitle())
                 .description(ideaDTO.getDescription())
                 .addedAt(ideaDTO.getAddedAt())
+                .score(ideaDTO.getScore())
                 .build();
     }
+
+    public static IdeaDTO map(Idea idea) {
+        return IdeaDTO.builder()
+                .id(idea.getId())
+                .title(idea.getTitle())
+                .description(idea.getDescription())
+                .addedAt(idea.getAddedAt())
+                .score(idea.getScore())
+                .build();
+    }
+
 
 
     public static User map(UserDTO userDTO) {

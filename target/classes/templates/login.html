@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="layout/layout"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="layout/layout"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
 </head>
 <body>
 <div layout:fragment="content">
@@ -14,7 +14,8 @@
                     Logowanie
                 </h2>
                 <h4>
-                    Logowanie umożliwi pozwoli Ci na edycję własnych pomysłów oraz ocenianie tych dodane przez inne osoby.
+                    Logowanie umożliwi pozwoli Ci na edycję własnych pomysłów oraz ocenianie tych dodane przez inne
+                    osoby.
                 </h4>
             </div>
         </div>
@@ -26,7 +27,8 @@
                             <input type="email" name="email" id="email" class="form-control" placeholder="Email">
                         </div>
                         <div class="form-group">
-                            <input type="password" min="0" name="password" id="password" class="form-control" placeholder="Hasło">
+                            <input type="password" min="0" name="password" id="password" class="form-control"
+                                   placeholder="Hasło">
                         </div>
                         <div class="text-center">
                             <button type="submit" class=" btn btn-primary">Zaloguj</button>
@@ -36,5 +38,6 @@
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>

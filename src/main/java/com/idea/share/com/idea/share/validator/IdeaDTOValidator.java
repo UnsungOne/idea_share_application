@@ -1,5 +1,6 @@
 package com.idea.share.com.idea.share.validator;
 
+import com.idea.share.com.idea.share.idea.Idea;
 import com.idea.share.com.idea.share.idea.IdeaDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -11,7 +12,7 @@ import org.springframework.validation.Validator;
 public class IdeaDTOValidator implements Validator {
     @Override
     public boolean supports(Class<?> aClass) {
-        return IdeaDTO.class.isAssignableFrom(aClass);
+        return IdeaDTO.class.equals(aClass);
     }
 
     @Override
