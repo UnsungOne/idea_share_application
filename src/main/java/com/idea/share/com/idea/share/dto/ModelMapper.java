@@ -21,7 +21,7 @@ public class ModelMapper {
                 .build();
     }
 
-    public static IdeaDTO map(Idea idea) {
+    public static IdeaDTO maoToDTO(Idea idea) {
         return IdeaDTO.builder()
                 .id(idea.getId())
                 .title(idea.getTitle())

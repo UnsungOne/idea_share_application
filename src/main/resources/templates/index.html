@@ -9,6 +9,16 @@
 <div layout:fragment="content">
     <div class="container main-content">
         <div class="row">
+            <div class="dropdown">
+                <h4>Sortowanie:</h4>
+                <select class="form-control" id="sortingTypes" th:field ="*{sortingTypes}">
+                    <option th:each = "sortingType : ${sortingTypes}"
+                        th:value= "${sortingType}"
+                        th:text="${sortingType.getValues()}"></option>
+                </select>
+            </div>
+        </div>
+        <hr>
             <table class="table">
                 <thead>
                 <tr>
@@ -45,6 +55,8 @@
                     <li th:each="i : ${#numbers.sequence(0, allPages -1)}" >
                         <a th:href="@{'/?page='}+${i}" th:text="${i+1}"></a>
                     </li>
+                    <p th:text="${session.sort}" th:unless="${session == null}">[...]</p>
+                    <p th:text="${#httpServletRequest.getParameter('sort')}" th:unless="${#httpServletRequest.getParameter('sort') == null}"></p>
                 </ul>
             </nav>
         </div>
