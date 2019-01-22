@@ -9,58 +9,69 @@
 <div layout:fragment="content">
     <div class="container main-content">
         <div class="row">
+
+
             <div class="dropdown">
                 <h4>Sortowanie:</h4>
-                <select class="form-control" id="sortingTypes" th:field ="*{sortingTypes}">
-                    <option th:each = "sortingType : ${sortingTypes}"
-                        th:value= "${sortingType}"
-                        th:text="${sortingType.getValues()}"></option>
+                <select class="form-control" id="sortingTypes" th:field="*{sortingTypes}">
+                    <option th:each="sortingType : ${sortingTypes}"
+                            th:value="${sortingType}"
+                            th:text="${sortingType.getValues()}"></option>
                 </select>
             </div>
         </div>
         <hr>
-            <table class="table">
-                <thead>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Tytuł</th>
+                <th scope="col">Opis</th>
+                <th scope="col">Data utworzenia</th>
+                <th scope="col">Wynik</th>
+                <th scope="col">Akcje</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <th:block th:each="idea : ${idea}">
                 <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Tytuł</th>
-                    <th scope="col">Opis</th>
-                    <th scope="col">Data utworzenia</th>
-                    <th scope="col">Wynik</th>
-                    <th scope="col">Akcje</th>
+                    <td id="ideaId" th:text="${idea.id}"></td>
+                    <td th:text="${idea.title}"></td>
+                    <td th:text="${idea.description}"></td>
+                    <td th:text="${idea.addedAt}"></td>
+                    <td id="sPhoneFromResponse" th:text="${idea.score}"></td>
+                    <td>
+
+                        <div class="btn-group">
+                            <form id="ideaUp">
+                                <button type="submit" class="btn btn-primary btn-sm glyphicon glyphicon-plus"></button>
+                            </form>
+                            <form id="ideaDown">
+                            <button class="btn btn-danger btn-sm glyphicon glyphicon-minus"></button>
+                            </form>
+                            <button th:class="${idea.id % 2==0} ? 'btn btn-default btn-sm glyphicon glyphicon-edit': 'hidden'"></button>
+                        </div>
+
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                <th:block th:each="idea : ${idea}">
-                    <tr>
-                        <td th:text="${idea.id}"></td>
-                        <td th:text="${idea.title}"></td>
-                        <td th:text="${idea.description}"></td>
-                        <td th:text="${idea.addedAt}"></td>
-                        <td th:text="${idea.score}"></td>
-                        <td>
-                            <div class="btn-group">
-                                <button class="btn btn-primary btn-sm glyphicon glyphicon-plus"></button>
-                                <button class="btn btn-danger btn-sm glyphicon glyphicon-minus"></button>
-                                <button th:class="${idea.id % 2==0} ? 'btn btn-default btn-sm glyphicon glyphicon-edit': 'hidden'"></button>
-                            </div>
-                        </td>
-                    </tr>
-                </th:block>
-                </tbody>
-            </table>
-            <nav aria-label="Page navigation">
-                <hr>
-                <ul th:if="${allPages gt 0}" class="pagination">
-                    <li th:each="i : ${#numbers.sequence(0, allPages -1)}" >
-                        <a th:href="@{'/?page='}+${i}" th:text="${i+1}"></a>
-                    </li>
-                    <p th:text="${session.sort}" th:unless="${session == null}">[...]</p>
-                    <p th:text="${#httpServletRequest.getParameter('sort')}" th:unless="${#httpServletRequest.getParameter('sort') == null}"></p>
-                </ul>
-            </nav>
-        </div>
+            </th:block>
+
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation">
+            <hr>
+            <ul th:if="${allPages gt 0}" class="pagination">
+                <li th:each="i : ${#numbers.sequence(0, allPages -1)}">
+                    <a th:href="@{'/?page='}+${i}" th:text="${i+1}"></a>
+                </li>
+                <p th:text="${session.sort}" th:unless="${session == null}">[...]</p>
+                <p th:text="${#httpServletRequest.getParameter('sort')}"
+                   th:unless="${#httpServletRequest.getParameter('sort') == null}"></p>
+            </ul>
+        </nav>
     </div>
+</div>
 </div>
 </body>
 </html>

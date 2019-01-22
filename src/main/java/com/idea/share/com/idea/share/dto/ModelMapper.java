@@ -2,6 +2,7 @@ package com.idea.share.com.idea.share.dto;
 
 import com.idea.share.com.idea.share.idea.Idea;
 import com.idea.share.com.idea.share.idea.IdeaDTO;
+import com.idea.share.com.idea.share.idea.IdeaRateDTO;
 import com.idea.share.com.idea.share.user.User;
 import com.idea.share.com.idea.share.user.UserDTO;
 
@@ -27,6 +28,15 @@ public class ModelMapper {
                 .title(idea.getTitle())
                 .description(idea.getDescription())
                 .addedAt(idea.getAddedAt())
+                .score(idea.getScore())
+                .build();
+    }
+
+
+
+    public static IdeaRateDTO maoToRateDTO(Idea idea) {
+        return IdeaRateDTO.builder()
+                .id(idea.getId())
                 .score(idea.getScore())
                 .build();
     }

@@ -18,9 +18,10 @@ public class IdeaService {
         this.ideaRepository = ideaRepository;
     }
 
-    public Idea getIdeaById(Integer id) throws Exception {
+    public IdeaRateDTO getIdeaById(Integer id) throws Exception {
         return ideaRepository
                 .findById(id)
+                .map(ModelMapper::maoToRateDTO)
                 .orElseThrow(() -> new Exception("Nie znaleziono produktu o id: " + id));
     }
 
@@ -51,16 +52,13 @@ public class IdeaService {
         ideaRepository.save(ModelMapper.map(ideaDTO));
     }
 
-    public int rateIdeaUp(IdeaDTO ideaDTO, Integer ideaId) {
+    public int rateIdeaUp(Integer ideaId) throws Exception {
         return ideaRepository.rateIdeaUp(ideaId);
     }
 
-    public int rateIdeaDown(Idea ideaDTO, Integer ideaId) {
-        ideaDTO.getTitle();
-   return ideaDTO.getScore() > 0 ? ideaRepository.rateIdeaDown(ideaId) : 0;
-      //  return ideaRepository.rateIdeaDown(ideaId);
+    public int rateIdeaDown(Integer ideaId) throws Exception {
+        return ideaRepository.rateIdeaDown(ideaId);
     }
-
     public void editIdea() {
     }
 
