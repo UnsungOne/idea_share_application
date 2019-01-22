@@ -2,20 +2,26 @@ package com.idea.share.com.idea.share.idea;
 
 import com.idea.share.com.idea.share.dto.ModelMapper;
 import com.idea.share.com.idea.share.sorting.SortEnum;
+import com.idea.share.com.idea.share.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 
 @Service
 public class IdeaService {
 
     private final IdeaRepository ideaRepository;
+    private final UserService userService;
 
-    public IdeaService(IdeaRepository ideaRepository) {
+    @Autowired
+    public IdeaService(IdeaRepository ideaRepository, UserService userService) {
         this.ideaRepository = ideaRepository;
+        this.userService = userService;
     }
 
     public IdeaRateDTO getIdeaById(Integer id) throws Exception {
@@ -46,20 +52,30 @@ public class IdeaService {
         return sort;
     }
 
-    public void addIdea(IdeaDTO ideaDTO) {
+    public void addIdea(IdeaDTO ideaDTO, HttpSession session) throws Exception {
         ideaDTO.setAddedAt(LocalDateTime.now());
         ideaDTO.setScore(0);
+        ideaDTO.setUser(userService.findUserById((determinieUserId(session))));
         ideaRepository.save(ModelMapper.map(ideaDTO));
     }
 
-    public int rateIdeaUp(Integer ideaId) throws Exception {
+    public int rateIdeaUp(Integer ideaId) {
         return ideaRepository.rateIdeaUp(ideaId);
     }
 
-    public int rateIdeaDown(Integer ideaId) throws Exception {
+    public int rateIdeaDown(Integer ideaId) {
         return ideaRepository.rateIdeaDown(ideaId);
     }
+
     public void editIdea() {
     }
 
+
+    public int determinieUserId(HttpSession session) {
+        if (session.getAttribute("userid") != null) {
+            return (int) session.getAttribute("userid");
+        } else {
+            return 0;
+        }
+    }
 }

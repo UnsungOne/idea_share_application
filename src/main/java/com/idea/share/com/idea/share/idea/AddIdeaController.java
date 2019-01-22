@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class AddIdeaController {
 
@@ -35,13 +37,12 @@ public class AddIdeaController {
     }
 
     @PostMapping("/addIdea")
-    public String addIdea(@ModelAttribute("idea") @Validated IdeaDTO ideaDTO, BindingResult bindingResult) {
+    public String addIdea(@ModelAttribute("idea") @Validated IdeaDTO ideaDTO, BindingResult bindingResult, HttpSession  session) throws Exception {
 
         if (bindingResult.hasErrors()) {
             return "add_idea";
         }
-
-        ideaService.addIdea(ideaDTO);
+        ideaService.addIdea(ideaDTO, session);
         return "redirect:/";
     }
 

@@ -22,21 +22,33 @@
             <div class="col-md-6">
                 <div class="myform form">
                     <form th:action="@{/registerUser}" method="post" th:object="${user}">
+
+                        <input class="hidden" type="tel" th:field="*{id}">
+
                         <div class="form-group">
                             <input type="text" th:field="*{name}" class="form-control" placeholder="Imię">
-                            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Name Error</div>
+                            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Name
+                                Error
+                            </div>
                         </div>
                         <div class="form-group">
                             <input type="email" th:field="*{email}" class="form-control" placeholder="Email">
-                            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger">Name Error</div>
+                            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger">Name
+                                Error
+                            </div>
                         </div>
                         <div class="form-group">
                             <input type="password" th:field="*{password}" class="form-control" placeholder="Hasło">
-                            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger">Name Error</div>
+                            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger">
+                                Name Error
+                            </div>
                         </div>
                         <div class="form-group">
-                            <input type="password" th:field="*{repeatPassword}" class="form-control" placeholder="Powtórz hasło">
-                            <div th:if="${#fields.hasErrors('repeatPassword')}" th:errors="*{repeatPassword}" class="text-danger">Name Error</div>
+                            <input type="password" th:field="*{repeatPassword}" class="form-control"
+                                   placeholder="Powtórz hasło">
+                            <div th:if="${#fields.hasErrors('repeatPassword')}" th:errors="*{repeatPassword}"
+                                 class="text-danger">Name Error
+                            </div>
                         </div>
                         <div class="text-center">
                             <button type="submit" class=" btn btn-primary">Utwórz konto</button>

@@ -9,9 +9,12 @@
 <div layout:fragment="content">
     <div class="container main-content">
         <div class="row">
-
+            <h1 th:text="${session.username}">
+            <h1 th:text="${session.userid}">
 
             <div class="dropdown">
+
+
                 <h4>Sortowanie:</h4>
                 <select class="form-control" id="sortingTypes" th:field="*{sortingTypes}">
                     <option th:each="sortingType : ${sortingTypes}"
@@ -29,6 +32,7 @@
                 <th scope="col">Opis</th>
                 <th scope="col">Data utworzenia</th>
                 <th scope="col">Wynik</th>
+                <th scope="col">Użytkownik</th>
                 <th scope="col">Akcje</th>
             </tr>
             </thead>
@@ -41,8 +45,8 @@
                     <td th:text="${idea.description}"></td>
                     <td th:text="${idea.addedAt}"></td>
                     <td id="sPhoneFromResponse" th:text="${idea.score}"></td>
+                    <td th:text="${idea.user.name}"></td>
                     <td>
-
                         <div class="btn-group">
                             <form id="ideaUp">
                                 <button type="submit" class="btn btn-primary btn-sm glyphicon glyphicon-plus"></button>

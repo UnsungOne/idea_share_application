@@ -1,16 +1,14 @@
 package com.idea.share.com.idea.share.user;
 
 import com.idea.share.com.idea.share.idea.Idea;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -23,6 +21,20 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private boolean voted;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Idea> ideas = new ArrayList<>();
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", voted=" + voted +
+                ", ideas=" + ideas +
+                '}';
+    }
 }

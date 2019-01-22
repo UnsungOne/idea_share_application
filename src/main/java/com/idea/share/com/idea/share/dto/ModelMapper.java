@@ -5,6 +5,7 @@ import com.idea.share.com.idea.share.idea.IdeaDTO;
 import com.idea.share.com.idea.share.idea.IdeaRateDTO;
 import com.idea.share.com.idea.share.user.User;
 import com.idea.share.com.idea.share.user.UserDTO;
+import com.idea.share.com.idea.share.user.UserLoginDTO;
 
 public class ModelMapper {
 
@@ -19,6 +20,7 @@ public class ModelMapper {
                 .description(ideaDTO.getDescription())
                 .addedAt(ideaDTO.getAddedAt())
                 .score(ideaDTO.getScore())
+                .user(ideaDTO.getUser())
                 .build();
     }
 
@@ -29,6 +31,7 @@ public class ModelMapper {
                 .description(idea.getDescription())
                 .addedAt(idea.getAddedAt())
                 .score(idea.getScore())
+                .user(idea.getUser())
                 .build();
     }
 
@@ -43,11 +46,37 @@ public class ModelMapper {
 
 
 
-    public static User map(UserDTO userDTO) {
+    public static User mapToUser(UserDTO userDTO) {
         return User.builder()
+                .id(userDTO.getId())
                 .email(userDTO.getEmail())
                 .password(userDTO.getPassword())
                 .name(userDTO.getName())
                 .build();
     }
+
+    public static UserDTO mapToUserDTO(User user) {
+        return UserDTO.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .name(user.getName())
+                .build();
+    }
+
+    public static UserLoginDTO mapToUserLoginDTO(User user) {
+        return UserLoginDTO.builder()
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .build();
+    }
+
+    public static User mapToUserLoginDTO(UserLoginDTO userLoginDTO) {
+        return User.builder()
+                .email(userLoginDTO.getEmail())
+                .password(userLoginDTO.getPassword())
+                .build();
+    }
+
+
 }

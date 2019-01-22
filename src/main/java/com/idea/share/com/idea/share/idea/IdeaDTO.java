@@ -1,14 +1,15 @@
 package com.idea.share.com.idea.share.idea;
 
 
+import com.idea.share.com.idea.share.user.User;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Builder
 public class IdeaDTO  {
 
@@ -18,5 +19,7 @@ public class IdeaDTO  {
     private LocalDateTime addedAt;
     private int score;
     private boolean active;
+    private User user;
+
 
 }

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class RegistrationController {
 
@@ -32,18 +34,23 @@ public class RegistrationController {
     @GetMapping("/register")
     String getRegistrationPage(Model model) {
         model.addAttribute("user", new UserDTO());
+        System.out.println(userService.findAllUsers());
         return "registration";
     }
 
 
     @PostMapping("/registerUser")
-    public String registerUser(@ModelAttribute("user") @Validated UserDTO userDTO, BindingResult bindingResult) {
+    public String registerUser(@ModelAttribute("user") @Validated UserDTO userDTO, BindingResult bindingResult, HttpSession session) {
+
 
         if (bindingResult.hasErrors()) {
             return "registration";
         }
 
         userService.registerUser(userDTO);
+        User userByEmailAndPassword = userService.findUserByEmailAndPassword(userDTO.getEmail(), userDTO.getPassword());
+        session.setAttribute("username", userByEmailAndPassword);
+        session.setAttribute("userid", userByEmailAndPassword.getId());
         return "redirect:/";
 
     }

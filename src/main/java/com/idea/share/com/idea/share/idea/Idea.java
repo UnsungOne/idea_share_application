@@ -1,16 +1,14 @@
 package com.idea.share.com.idea.share.idea;
 
 import com.idea.share.com.idea.share.user.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -29,12 +27,4 @@ public class Idea {
     @JoinColumn(name = "id_user")
     private User user;
 
-
-    public Idea(String title, String description, LocalDateTime addedAt, int score, boolean active) {
-        this.title = title;
-        this.description = description;
-        this.addedAt = addedAt;
-        this.score = score;
-        this.active = active;
-    }
 }
