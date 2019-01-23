@@ -9,12 +9,12 @@ import java.beans.PropertyEditorSupport;
 public class EnumConverter extends PropertyEditorSupport {
 
     @Override
-
     public void setAsText(String text) {
         try {
             setValue(SortEnum.valueOf(text.toUpperCase()));
         } catch (Exception ex) {
-            setValue(null);
+            setValue(SortEnum.ADDED);
         }
     }
+
 }

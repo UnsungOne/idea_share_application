@@ -34,6 +34,7 @@
                 <th scope="col">Wynik</th>
                 <th scope="col">Użytkownik</th>
                 <th scope="col">Akcje</th>
+                <th scope="col">ID utworzonych</th>
             </tr>
             </thead>
             <tbody>
@@ -46,15 +47,16 @@
                     <td th:text="${idea.added}"></td>
                     <td id="sPhoneFromResponse" th:text="${idea.score}"></td>
                     <td th:text="${idea.user.name}"></td>
+                    <td th:text="${idea.user.ideas}"></td>
                     <td>
-                        <div class="btn-group">
+                        <div th:class="btn-group" th:unless="${session.username ==null}">
                             <form id="ideaUp">
                                 <button type="submit" class="btn btn-primary btn-sm glyphicon glyphicon-plus"></button>
                             </form>
                             <form id="ideaDown">
                             <button class="btn btn-danger btn-sm glyphicon glyphicon-minus"></button>
                             </form>
-                            <button th:class="${idea.id % 2==0} ? 'btn btn-default btn-sm glyphicon glyphicon-edit': 'hidden'"></button>
+                            <button th:class="${OK} ? 'btn btn-default btn-sm glyphicon glyphicon-edit': 'hidden'"></button>
                         </div>
 
                     </td>

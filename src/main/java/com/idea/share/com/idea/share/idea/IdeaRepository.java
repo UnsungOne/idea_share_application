@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Transactional
 @Repository
 public interface IdeaRepository extends PagingAndSortingRepository <Idea, Integer> {
@@ -21,7 +23,11 @@ public interface IdeaRepository extends PagingAndSortingRepository <Idea, Intege
     @Query(value = "UPDATE ideas SET score=score-1 WHERE id = :entryId", nativeQuery = true)
     int rateIdeaDown(@Param("entryId") Integer ideaId);
 
-    @Query(value = "SELECT * FROM ideas WHERE active = false", nativeQuery = true)
+    @Query(value = "SELECT * FROM ideas WHERE active = true", nativeQuery = true)
     Page<Idea> fetchAll(PageRequest pageRequest);
+
+
+    @Query(value = "SELECT * FROM ideas", nativeQuery = true)
+    List<Idea> fetchData();
 
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.beans.PropertyEditor;
 import java.util.EnumSet;
 
@@ -40,12 +41,13 @@ public class IdeaController {
     @GetMapping("/")
     public String getMainPage(Model model, @RequestParam(value = "page", defaultValue = DEFAULT_PAGE_VALUE) int page,
                               @RequestParam(value = "limit", defaultValue = DEFAULT_LIMIT_VALUE) int limit,
-                              @RequestParam(value = "sort", defaultValue = DEFAULT_SORT_VALUE) SortEnum sort, HttpServletRequest request) {
+                              @RequestParam(value = "sort", defaultValue = DEFAULT_SORT_VALUE) SortEnum sort, HttpSession session, HttpServletRequest request) throws Exception {
         Page<IdeaDTO> ideas = ideaService.fetchAllIdeas(page, limit, sort);
         model.addAttribute("idea", ideas);
         request.getSession().setAttribute("sort", ideaService.getOrders(sort));
         model.addAttribute("allPages", ideas.getTotalPages());
         model.addAttribute("sortingTypes", EnumSet.allOf(SortEnum.class));
+       model.addAttribute("OK", ideaService.canEditSelectedIdeas(session));
         return "index";
 
 

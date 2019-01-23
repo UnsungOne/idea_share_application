@@ -5,6 +5,6 @@ description VARCHAR (255) NOT NULL,
 added TIMESTAMP NOT NULL,
 score INT NOT NULL,
 active BOOLEAN NOT NULL,
-id_user INT NOT NULL,
-CONSTRAINT user_constraint FOREIGN KEY (id_user) REFERENCES users(id)
+iduser INT NOT NULL,
+CONSTRAINT user_constraint FOREIGN KEY (iduser) REFERENCES users(id)
 );

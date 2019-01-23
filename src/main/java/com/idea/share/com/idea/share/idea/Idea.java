@@ -24,7 +24,7 @@ public class Idea {
     private int score;
     private boolean active;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "iduser")
     private User user;
 
 }
