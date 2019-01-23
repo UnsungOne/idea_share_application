@@ -35,25 +35,23 @@ public class IdeaService {
     public Page<IdeaDTO> fetchAllIdeas(int page, int limit, SortEnum sortPhrase) {
         Sort sort;
         sort = getOrders(sortPhrase);
-        Page<Idea> ideaEntities = ideaRepository.findAll(PageRequest.of(page, limit, sort));
+        Page<Idea> ideaEntities = ideaRepository.fetchAll(PageRequest.of(page, limit, sort));
         Page<IdeaDTO> ideaDTO = ideaEntities.map(ModelMapper::maoToDTO);
         return ideaDTO;
     }
 
     public Sort getOrders(SortEnum sortPhrase) {
-        Sort sort;
         if (sortPhrase.equals(SortEnum.ADDED)) {
-            sort = new Sort(Sort.Direction.DESC, "addedAt");
+           return new Sort(Sort.Direction.DESC, "added");
         } else if (sortPhrase.equals(SortEnum.SCORE)) {
-            sort = new Sort(Sort.Direction.DESC, "score");
+           return new Sort(Sort.Direction.DESC, "score");
         } else {
-            sort = new Sort(Sort.Direction.DESC, "addedAt");
+           return new Sort(Sort.Direction.DESC, "added");
         }
-        return sort;
     }
 
     public void addIdea(IdeaDTO ideaDTO, HttpSession session) throws Exception {
-        ideaDTO.setAddedAt(LocalDateTime.now());
+        ideaDTO.setAdded(LocalDateTime.now());
         ideaDTO.setScore(0);
         ideaDTO.setUser(userService.findUserById((determinieUserId(session))));
         ideaRepository.save(ModelMapper.map(ideaDTO));

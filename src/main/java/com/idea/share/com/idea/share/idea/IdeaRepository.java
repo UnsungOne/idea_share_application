@@ -1,5 +1,7 @@
 package com.idea.share.com.idea.share.idea;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -18,5 +20,8 @@ public interface IdeaRepository extends PagingAndSortingRepository <Idea, Intege
     @Modifying
     @Query(value = "UPDATE ideas SET score=score-1 WHERE id = :entryId", nativeQuery = true)
     int rateIdeaDown(@Param("entryId") Integer ideaId);
+
+    @Query(value = "SELECT * FROM ideas WHERE active = false", nativeQuery = true)
+    Page<Idea> fetchAll(PageRequest pageRequest);
 
 }

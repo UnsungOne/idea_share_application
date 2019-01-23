@@ -7,7 +7,7 @@ public class SortedByLastAddedIdeas implements Sorting {
 
     public void apply(Sort sort) {
 
-        Sort lastAddedIdeas = new Sort(Sort.Direction.DESC, "addedAt");
+        Sort lastAddedIdeas = new Sort(Sort.Direction.DESC, "added");
 
     }
 }

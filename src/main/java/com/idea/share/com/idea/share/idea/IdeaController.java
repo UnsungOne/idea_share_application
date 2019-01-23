@@ -1,15 +1,19 @@
 package com.idea.share.com.idea.share.idea;
 
 
+import com.idea.share.com.idea.share.configuration.EnumConverter;
 import com.idea.share.com.idea.share.sorting.SortEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.beans.PropertyEditor;
 import java.util.EnumSet;
 
 @Controller
@@ -21,9 +25,16 @@ public class IdeaController {
     private static final String DEFAULT_LIMIT_VALUE = "10";
     private static final String DEFAULT_SORT_VALUE = "ADDED";
 
+
     @Autowired
     public IdeaController(IdeaService ideaService) {
         this.ideaService = ideaService;
+    }
+
+
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
+        dataBinder.registerCustomEditor(SortEnum.class, new EnumConverter());
     }
 
     @GetMapping("/")

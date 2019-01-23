@@ -18,7 +18,7 @@ public class ModelMapper {
                 .id(ideaDTO.getId())
                 .title(ideaDTO.getTitle())
                 .description(ideaDTO.getDescription())
-                .addedAt(ideaDTO.getAddedAt())
+                .added(ideaDTO.getAdded())
                 .score(ideaDTO.getScore())
                 .user(ideaDTO.getUser())
                 .build();
@@ -29,7 +29,7 @@ public class ModelMapper {
                 .id(idea.getId())
                 .title(idea.getTitle())
                 .description(idea.getDescription())
-                .addedAt(idea.getAddedAt())
+                .added(idea.getAdded())
                 .score(idea.getScore())
                 .user(idea.getUser())
                 .build();

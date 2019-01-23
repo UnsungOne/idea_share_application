@@ -6,7 +6,7 @@ public class SortByIdeaWithTheHighestScore implements Sorting {
     @Override
     public void apply(Sort sort) {
 
-        Sort ideaWithTheHighestScore = new Sort(Sort.Direction.DESC, "addedAt");
+        Sort ideaWithTheHighestScore = new Sort(Sort.Direction.DESC, "added");
 
     }
 }

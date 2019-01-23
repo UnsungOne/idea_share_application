@@ -20,7 +20,7 @@ public class Idea {
     private Integer id;
     private String title;
     private String description;
-    private LocalDateTime addedAt;
+    private LocalDateTime added;
     private int score;
     private boolean active;
     @ManyToOne(cascade = CascadeType.ALL)
