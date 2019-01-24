@@ -53,12 +53,12 @@ public class IdeaService {
         }
     }
 
-    public void addIdea(IdeaDTO ideaDTO, int id) throws Exception {
-        ideaDTO.setAdded(LocalDateTime.now());
-        ideaDTO.setScore(0);
-        ideaDTO.setActive(true);
-        ideaDTO.setUser(userService.findUserById(id));
-        ideaRepository.save(ModelMapper.map(ideaDTO));
+    public void addIdea(Idea idea, int id) throws Exception {
+        idea.setAdded(LocalDateTime.now());
+        idea.setScore(0);
+        idea.setActive(true);
+        idea.setUser(userService.findUserById(id));
+        ideaRepository.save((idea));
     }
 
     public int rateIdeaUp(Integer ideaId) {
@@ -68,7 +68,6 @@ public class IdeaService {
     public int rateIdeaDown(Integer ideaId) {
         return ideaRepository.rateIdeaDown(ideaId);
     }
-
 
 //    public boolean canEditSelectedIdeas(HttpSession session) {
 //        if (ideaRepository.fetchData().getId()==determinieUserId(session)){
@@ -100,7 +99,6 @@ public class IdeaService {
 //        return nonEditableIdeas;
 //
 //    }
-
 
 
 }

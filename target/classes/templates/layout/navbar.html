@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" />
     </head>
@@ -15,15 +14,14 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" th:href="@{/}">Idea Share Application</a>
+                    <p class="navbar-text" th:text="${session.name}"></p>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a th:href="@{/login}">Logowanie</a></li>
+                        <li th:if="${session.user ==null}"><a th:href="@{/login}">Logowanie</a></li>
                         <li><a th:href="@{/register}">Rejestracja</a></li>
-                        <li><a th:href="@{/profile}">Profil</a></li>
-                        <li><a th:href="@{/add}">Dodaj pomysł</a></li>
-                        <li><a href="#" th:href="@{/logout}">Wyloguj</a></li>
-                    </ul>
+                        <li th:if="${session.user !=null}"><a th:href="@{/add}">Dodaj pomysł</a></li>
+                        <li th:if="${session.user !=null}"><a th:href="@{/logout}">Wyloguj</a></li>
                     </ul>
                 </div>
             </nav>

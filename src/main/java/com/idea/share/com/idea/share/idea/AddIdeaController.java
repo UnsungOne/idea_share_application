@@ -10,10 +10,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@SessionAttributes("userByEmailAndPassword")
 public class AddIdeaController {
 
     private final IdeaService ideaService;
@@ -30,18 +30,24 @@ public class AddIdeaController {
     }
 
     @GetMapping("/add")
-    public String getIdeaAddingPage(Model model) {
-        model.addAttribute("idea", new IdeaDTO());
-        return "add_idea";
+    public String getIdeaAddingPage(Model model, HttpSession session) {
+
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        } else {
+
+            model.addAttribute("idea", new Idea());
+            return "add_idea";
+        }
     }
 
     @PostMapping("/addIdea")
-    public String addIdea(@ModelAttribute("idea") @Validated IdeaDTO ideaDTO, BindingResult bindingResult, User user) throws Exception {
+    public String addIdea(@ModelAttribute("idea") @Validated Idea idea, BindingResult bindingResult, @SessionAttribute User user) throws Exception {
 
         if (bindingResult.hasErrors()) {
             return "add_idea";
         }
-        ideaService.addIdea(ideaDTO, user.getId());
+        ideaService.addIdea(idea, user.getId());
         return "redirect:/";
     }
 

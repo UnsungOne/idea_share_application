@@ -1,6 +1,5 @@
 package com.idea.share.com.idea.share.validator;
 
-import com.idea.share.com.idea.share.user.User;
 import com.idea.share.com.idea.share.user.UserDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -28,7 +27,6 @@ public class UserDTOValidator implements Validator {
         ValidationUtils.rejectIfEmpty(errors, "email", "user.validator.field.notEmpty");
         ValidationUtils.rejectIfEmpty(errors, "password", "user.validator.field.notEmpty");
         ValidationUtils.rejectIfEmpty(errors, "repeatPassword", "user.validator.field.notEmpty");
-
 
         if (!matcher.matches()) {
             errors.rejectValue("password", "user.validator.field.PasswordLength");

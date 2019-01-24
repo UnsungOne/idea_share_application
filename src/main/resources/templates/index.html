@@ -9,8 +9,8 @@
 <div layout:fragment="content">
     <div class="container main-content">
         <div class="row">
-            <h1 th:text="${session.username}">
-                <h1 th:text="${session.userid}">
+            <h1 th:text="${session.user}">
+                <h1 th:text="${session.user.id}">
 
                     <div class="dropdown">
 
@@ -24,6 +24,7 @@
                     </div>
         </div>
         <hr>
+
         <table class="table">
             <thead>
             <tr>
@@ -33,13 +34,14 @@
                 <th scope="col">Data utworzenia</th>
                 <th scope="col">Wynik</th>
                 <th scope="col">Użytkownik</th>
-                <th scope="col">Akcje</th>
                 <th scope="col">ID utworzonych</th>
+                <th scope="col">Akcje</th>
+
             </tr>
             </thead>
             <tbody>
-            <th:block th:each="idea : ${idea}">
-                <tr>
+                <tr th:each="idea : ${idea}">
+                    <form id="ideaUp"><input type="hidden" th:value="${idea.id}"></form>
                     <input type="hidden" id="ideaId" th:value="${idea.id}">
                     <td th:value="${idea.id}" th:text="${idea.id}"></td>
                     <td th:text="${idea.title}"></td>
@@ -48,24 +50,19 @@
                     <td id="sPhoneFromResponse" th:text="${idea.score}"></td>
                     <td th:text="${idea.user.name}"></td>
                     <td th:text="${idea.user.id}"></td>
-                    <td>
-                        <div class="btn-group">
-                            <form id="ideaUp">
-                                <button type="submit" th:if="${user.voted}" class="btn btn-primary btn-sm glyphicon glyphicon-euro"></button>
-                            </form>
-                            <form id="ideaDown">
-                                <button class="btn btn-danger btn-sm glyphicon glyphicon-minus"></button>
-                            </form>
-                            <button th:class="${OK } ? 'btn btn-default btn-sm glyphicon glyphicon-edit': 'hidden'"></button>
-                        </div>
+                    <td></td>
+                    <td><input form="ideaUp" type="submit" value="Save" /></td>
+                            <!--<form id="ideaDown">-->
+                                <!--<button class="btn btn-danger btn-sm glyphicon glyphicon-minus"></button>-->
+                            <!--</form>-->
+                            <!--&lt;!&ndash;<button th:class="${idea.id % 2==0} ? 'btn btn-default btn-sm glyphicon glyphicon-edit': 'btn btn-default btn-sm glyphicon glyphicon-euro'"></button>&ndash;&gt;-->
                     </td>
-                    <h2 th:text="${idea.user.voted} ? 'Hello' : 'Something else'"></h2>
+                    <!--<h2 th:text="${canVote} ? 'Hello' : 'Something else'"></h2>-->
                 </tr>
-            </th:block>
-
-
+                </form>
             </tbody>
         </table>
+
         <nav aria-label="Page navigation">
             <hr>
             <ul th:if="${allPages gt 0}" class="pagination">

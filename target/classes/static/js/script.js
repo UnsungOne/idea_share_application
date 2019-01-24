@@ -10,10 +10,10 @@ $(document).ready(function () {
             url :'/idea/rateUp/'+ id,
             data :{ id },
             success: function(idea) {
-                var respContent = "";
-                respContent += "<p class='success'>";
-                respContent += idea.score + "</p>";
-                $("#sPhoneFromResponse").html(respContent);
+                $.each(idea, function (index, value) {
+                    $('#sPhoneFromResponse').empty().append("<p>" + this.id+ "</p>");
+
+                });
                  console.log('data sent');
             }
         });

@@ -8,10 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -49,8 +46,8 @@ public class RegistrationController {
 
         userService.registerUser(userDTO);
         User userByEmailAndPassword = userService.findUserByEmailAndPassword(userDTO.getEmail(), userDTO.getPassword());
-        session.setAttribute("username", userByEmailAndPassword);
-        session.setAttribute("userid", userByEmailAndPassword.getId());
+        session.setAttribute("user", userByEmailAndPassword);
+        session.setAttribute("name", userByEmailAndPassword.getName());
         return "redirect:/";
 
     }

@@ -12,19 +12,19 @@ import org.springframework.validation.Validator;
 public class IdeaDTOValidator implements Validator {
     @Override
     public boolean supports(Class<?> aClass) {
-        return IdeaDTO.class.equals(aClass);
+        return Idea.class.equals(aClass);
     }
 
     @Override
     public void validate(Object o, Errors errors) {
-        IdeaDTO ideaDTO = (IdeaDTO) o;
+        Idea idea = (Idea) o;
         ValidationUtils.rejectIfEmpty(errors, "title", "idea.validator.field.notEmpty");
         ValidationUtils.rejectIfEmpty(errors, "description", "idea.validator.field.notEmpty");
 
-        if (ideaDTO.getTitle().length() > 255) {
+        if (idea.getTitle().length() > 255) {
             errors.rejectValue("title", "idea.validator.field.tooLong");
         }
-        if (ideaDTO.getDescription().length() > 255) {
+        if (idea.getDescription().length() > 255) {
             errors.rejectValue("description", "idea.validator.field.tooLong");
         }
 

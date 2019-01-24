@@ -22,5 +22,4 @@ public class IdeaDTO  {
     private boolean active;
     private User user;
 
-
 }

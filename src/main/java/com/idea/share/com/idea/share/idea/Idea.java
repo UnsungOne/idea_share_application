@@ -27,5 +27,4 @@ public class Idea implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "iduser")
     private User user;
-
 }

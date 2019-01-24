@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Builder
-@SessionScope
 @Table(name = "users")
 public class User {
     @Id
