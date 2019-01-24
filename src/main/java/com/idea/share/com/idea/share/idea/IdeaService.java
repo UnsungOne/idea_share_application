@@ -2,6 +2,7 @@ package com.idea.share.com.idea.share.idea;
 
 import com.idea.share.com.idea.share.dto.ModelMapper;
 import com.idea.share.com.idea.share.sorting.SortEnum;
+import com.idea.share.com.idea.share.user.User;
 import com.idea.share.com.idea.share.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -52,11 +53,11 @@ public class IdeaService {
         }
     }
 
-    public void addIdea(IdeaDTO ideaDTO, HttpSession session) throws Exception {
+    public void addIdea(IdeaDTO ideaDTO, int id) throws Exception {
         ideaDTO.setAdded(LocalDateTime.now());
         ideaDTO.setScore(0);
         ideaDTO.setActive(true);
-        ideaDTO.setUser(userService.findUserById((determinieUserId(session))));
+        ideaDTO.setUser(userService.findUserById(id));
         ideaRepository.save(ModelMapper.map(ideaDTO));
     }
 
@@ -68,17 +69,25 @@ public class IdeaService {
         return ideaRepository.rateIdeaDown(ideaId);
     }
 
-    public List<Idea> canEditSelectedIdeas(HttpSession session) {
+
+//    public boolean canEditSelectedIdeas(HttpSession session) {
+//        if (ideaRepository.fetchData().getId()==determinieUserId(session)){
+//          return true;
+//        } else return false;
+//
+//    }
+
+//    public List<Idea> canEditSelectedIdeas1(HttpSession session) {
 //        if (ideaRepository.fetchData().stream()
 //                .allMatch(idea -> idea.getUser().getId() == determinieUserId(session))) return true;
 //        else return false;
-
-        List<Idea> nonEditableIdeas = new ArrayList<>();
-        for (Idea idea : ideaRepository.fetchData()) {
-            if (idea.getUser().getId() == determinieUserId(session)) {
-                nonEditableIdeas.add(idea);
-            }
-            System.out.println(nonEditableIdeas);
+//
+//        List<Idea> nonEditableIdeas = new ArrayList<>();
+//        for (Idea idea : ideaRepository.fetchData()) {
+//            if (idea.getUser().getId() == determinieUserId(session)) {
+//                nonEditableIdeas.add(idea);
+//            }
+//            System.out.println(nonEditableIdeas.toString());
 
 //        return nonEditableIdeas;
 //       Idea
@@ -87,19 +96,11 @@ public class IdeaService {
 //
 //
 
-        }
-        return nonEditableIdeas;
+//        }
+//        return nonEditableIdeas;
+//
+//    }
 
-    }
-
-
-    public int determinieUserId(HttpSession session) {
-        if (session.getAttribute("userid") != null) {
-            return (int) session.getAttribute("userid");
-        } else {
-            return 0;
-        }
-    }
 
 
 }

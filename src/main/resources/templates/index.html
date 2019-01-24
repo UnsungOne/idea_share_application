@@ -10,18 +10,18 @@
     <div class="container main-content">
         <div class="row">
             <h1 th:text="${session.username}">
-            <h1 th:text="${session.userid}">
+                <h1 th:text="${session.userid}">
 
-            <div class="dropdown">
+                    <div class="dropdown">
 
 
-                <h4>Sortowanie:</h4>
-                <select class="form-control" id="sortingTypes" th:field="*{sortingTypes}">
-                    <option th:each="sortingType : ${sortingTypes}"
-                            th:value="${sortingType}"
-                            th:text="${sortingType.getValues()}"></option>
-                </select>
-            </div>
+                        <h4>Sortowanie:</h4>
+                        <select class="form-control" id="sortingTypes" th:field="*{sortingTypes}">
+                            <option th:each="sortingType : ${sortingTypes}"
+                                    th:value="${sortingType}"
+                                    th:text="${sortingType.getValues()}"></option>
+                        </select>
+                    </div>
         </div>
         <hr>
         <table class="table">
@@ -38,30 +38,31 @@
             </tr>
             </thead>
             <tbody>
-
             <th:block th:each="idea : ${idea}">
                 <tr>
-                    <td id="ideaId" th:text="${idea.id}"></td>
+                    <input type="hidden" id="ideaId" th:value="${idea.id}">
+                    <td th:value="${idea.id}" th:text="${idea.id}"></td>
                     <td th:text="${idea.title}"></td>
                     <td th:text="${idea.description}"></td>
                     <td th:text="${idea.added}"></td>
                     <td id="sPhoneFromResponse" th:text="${idea.score}"></td>
                     <td th:text="${idea.user.name}"></td>
-                    <td th:text="${idea.user.ideas}"></td>
+                    <td th:text="${idea.user.id}"></td>
                     <td>
-                        <div th:class="btn-group" th:unless="${session.username ==null}">
+                        <div class="btn-group">
                             <form id="ideaUp">
-                                <button type="submit" class="btn btn-primary btn-sm glyphicon glyphicon-plus"></button>
+                                <button type="submit" th:if="${user.voted}" class="btn btn-primary btn-sm glyphicon glyphicon-euro"></button>
                             </form>
                             <form id="ideaDown">
-                            <button class="btn btn-danger btn-sm glyphicon glyphicon-minus"></button>
+                                <button class="btn btn-danger btn-sm glyphicon glyphicon-minus"></button>
                             </form>
-                            <button th:class="${OK} ? 'btn btn-default btn-sm glyphicon glyphicon-edit': 'hidden'"></button>
+                            <button th:class="${OK } ? 'btn btn-default btn-sm glyphicon glyphicon-edit': 'hidden'"></button>
                         </div>
-
                     </td>
+                    <h2 th:text="${idea.user.voted} ? 'Hello' : 'Something else'"></h2>
                 </tr>
             </th:block>
+
 
             </tbody>
         </table>

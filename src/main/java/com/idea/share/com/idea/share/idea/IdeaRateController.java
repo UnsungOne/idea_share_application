@@ -16,7 +16,7 @@ public class IdeaRateController {
         this.ideaService = ideaService;
     }
 
-    @PostMapping(value = "/idea/{id}/rateUp", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/idea/rateUp/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<IdeaRateDTO> rateIdeaUp(IdeaRateDTO ideaRateDTO, @PathVariable Integer id) throws Exception {
         ideaService.rateIdeaUp(id);
         IdeaRateDTO currentIdeaDto = ideaService.getIdeaById(id);
@@ -24,7 +24,7 @@ public class IdeaRateController {
         return new ResponseEntity<>(ideaRateDTO, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/idea/{id}/rateDown", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/idea/rateDown/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<IdeaRateDTO> rateIdeaDown(IdeaRateDTO ideaRateDTO, @PathVariable Integer id) throws Exception {
         ideaService.rateIdeaDown(id);
         IdeaRateDTO currentIdeaDto = ideaService.getIdeaById(id);

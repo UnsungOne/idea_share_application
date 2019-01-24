@@ -1,5 +1,6 @@
 package com.idea.share.com.idea.share.idea;
 
+import com.idea.share.com.idea.share.user.User;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,14 +8,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
 @Controller
+@SessionAttributes("userByEmailAndPassword")
 public class AddIdeaController {
 
     private final IdeaService ideaService;
@@ -37,12 +36,12 @@ public class AddIdeaController {
     }
 
     @PostMapping("/addIdea")
-    public String addIdea(@ModelAttribute("idea") @Validated IdeaDTO ideaDTO, BindingResult bindingResult, HttpSession  session) throws Exception {
+    public String addIdea(@ModelAttribute("idea") @Validated IdeaDTO ideaDTO, BindingResult bindingResult, User user) throws Exception {
 
         if (bindingResult.hasErrors()) {
             return "add_idea";
         }
-        ideaService.addIdea(ideaDTO, session);
+        ideaService.addIdea(ideaDTO, user.getId());
         return "redirect:/";
     }
 

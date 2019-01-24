@@ -18,7 +18,6 @@ public class UserService {
 
     public void registerUser(UserDTO userDTO) {
         userRepository.save(ModelMapper.mapToUser(userDTO));
-
     }
 
     public User findUserByEmailAndPassword(String email, String password) {
@@ -33,4 +32,17 @@ public class UserService {
         return userRepository.findById(userId).orElseThrow(() -> new Exception("Nie znaleziono produktu o id: " + userId));
     }
 
+    public void voteUpOrDown(Integer id) {
+        userRepository.changeVoteStatusToTrue(id);
+    }
+
+    public boolean isEligibleToVote(Integer id) throws Exception {
+        if (findUserById(id).isVoted() == true) {
+            System.out.println("Użytkownik nie może głosować");
+            return true;
+        } else {
+            System.out.println("Użytkownik może głosować");
+            return false;
+        }
+    }
 }

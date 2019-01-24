@@ -4,6 +4,7 @@ import com.idea.share.com.idea.share.user.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @Entity
 @Builder
 @Table(name = "ideas")
-public class Idea {
+public class Idea implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

@@ -2,6 +2,7 @@ package com.idea.share.com.idea.share.user;
 
 import com.idea.share.com.idea.share.idea.Idea;
 import lombok.*;
+import org.springframework.web.context.annotation.SessionScope;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Builder
+@SessionScope
 @Table(name = "users")
 public class User {
     @Id
