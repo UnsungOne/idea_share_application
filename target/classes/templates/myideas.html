@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container main-content">
+        <div class="row">
+            <h3 th:text="${session.user}"></h3>
+            <div class="dropdown">
+                <h4>Sortowanie:</h4>
+                <select class="form-controlcol-md-6" id="sortingTwypes" th:field="*{sortingTypes}"
+                        onchange="window.location.href=this.value">
+                    <div>
+                        <option selected="" value="">Select</option>
+                        <option th:each="sortingType : ${sortingTypes}"
+                                th:value="@{'/ideas/?sort='}+${sortingType}"
+                                th:text="${sortingType.getValues()}">
+                        </option>
+                    </div>
+                </select>
+            </div>
+            <hr>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Tytuł</th>
+                    <th scope="col">Opis</th>
+                    <th scope="col">Data utworzenia</th>
+                    <th scope="col">Wynik</th>
+                    <th scope="col">Edycja</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="idea : ${idea}">
+                    <td th:text="${idea.id}"></td>
+                    <td th:text="${idea.title}"></td>
+                    <td th:text="${idea.description}"></td>
+                    <td th:text="${idea.added}"></td>
+                    <td th:text="${idea.score}"></td>
+                    <td><a th:href="@{'/edit/'}+${idea.id}" class="btn btn-success btn-sm" data-toggle="modal"
+                           data-target="#idea">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                    </td>
+                    </td>
+                </tr>
+                </form>
+                </tbody>
+            </table>
+
+            <form id="ideaEditForm" role="form" th:action="@{/edit}" method="post">
+                <div class="modal fade" id="idea" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h3 class="modal-title">Edycja pomysłu</h3>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="form-group">
+                                    <label for="title" class="form-control-label">Tytuł:</label>
+                                    <input type="text" class="form-control" id="title" name="title" placeholder="Tytuł"
+                                           value="">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="description" class="form-control-label">Opis:</label>
+                                    <input type="text" class="form-control" id="description" name="description"
+                                           placeholder="Opis" value="">
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="submit" class=" btn btn-primary" value="edit">Zapisz zmiany</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <nav aria-label="Page navigation">
+                <hr>
+                <ul th:if="${allPages gt 0}" class="pagination">
+                    <li th:each="i : ${#numbers.sequence(0, allPages -1)}">
+                        <a th:href="@{'/ideas/?page='}+${i}+${'&sort='}+${session.sort}" th:text="${i+1}"></a>
+                    </li>
+                    <p>SORTOWANIE:</p>
+                    <p th:text="${session.sort}"></p>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</body>
+</html>

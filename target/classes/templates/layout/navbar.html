@@ -21,6 +21,7 @@
                         <li th:if="${session.user ==null}"><a th:href="@{/login}">Logowanie</a></li>
                         <li><a th:href="@{/register}">Rejestracja</a></li>
                         <li th:if="${session.user !=null}"><a th:href="@{/add}">Dodaj pomysł</a></li>
+                        <li th:if="${session.user !=null}"><a th:href="@{/ideas}">Moje pomysły</a></li>
                         <li th:if="${session.user !=null}"><a th:href="@{/logout}">Wyloguj</a></li>
                     </ul>
                 </div>

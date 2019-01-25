@@ -36,6 +36,15 @@ public class IdeaService {
                 .orElseThrow(() -> new Exception("Nie znaleziono produktu o id: " + id));
     }
 
+
+    public Page<IdeaDTO> fetchMyIdeas(int user, int page, int limit, SortEnum sortPhrase, HttpSession session) {
+        Sort sort = getOrders(sortPhrase, session);
+        Page<Idea> ideaEntities = ideaRepository.fetchUserIdeas(user, PageRequest.of(page, limit, sort));
+        Page<IdeaDTO> ideaDTO = ideaEntities.map(ModelMapper::maoToDTO);
+        return ideaDTO;
+    }
+
+
     public Page<IdeaDTO> fetchAllIdeas(int page, int limit, SortEnum sortPhrase, HttpSession session) {
         Sort sort = getOrders(sortPhrase, session);
         Page<Idea> ideaEntities = ideaRepository.fetchAll(PageRequest.of(page, limit, sort));
@@ -45,10 +54,10 @@ public class IdeaService {
 
     public Sort getOrders(SortEnum sortPhrase, HttpSession session) {
         if (sortPhrase.equals(SortEnum.ADDED)) {
-            session.setAttribute("sort", new Sort(Sort.Direction.DESC, "added"));
+            session.setAttribute("sort", SortEnum.ADDED);
             return new Sort(Sort.Direction.DESC, "added");
         } else if (sortPhrase.equals(SortEnum.SCORE)) {
-            session.setAttribute("sort", new Sort(Sort.Direction.DESC, "score"));
+            session.setAttribute("sort", SortEnum.SCORE);
             return new Sort(Sort.Direction.DESC, "score");
         } else {
             session.setAttribute("sort", new Sort(Sort.Direction.DESC, "added"));
@@ -56,13 +65,18 @@ public class IdeaService {
         }
     }
 
-    public void addIdea(Idea idea, int id) throws Exception {
+    public void addIdea(Idea idea, int userId) throws Exception {
         idea.setAdded(LocalDateTime.now());
         idea.setScore(0);
         idea.setActive(true);
-        idea.setUser(userService.findUserById(id));
+        idea.setUser(userService.findUserById(userId));
         ideaRepository.save((idea));
     }
+
+    public void updateExistingIdea(String title, String description, int IdeaId) {
+        ideaRepository.updateExistingIdea(title, description, IdeaId);
+    }
+
 
     public int rateIdeaUp(Integer ideaId) {
         return ideaRepository.rateIdeaUp(ideaId);

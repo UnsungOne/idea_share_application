@@ -25,7 +25,7 @@ public class IdeaController {
     private final UserService userService;
 
     private static final String DEFAULT_PAGE_VALUE = "0";
-    private static final String DEFAULT_LIMIT_VALUE = "10";
+    private static final String DEFAULT_LIMIT_VALUE = "4";
     private static final String DEFAULT_SORT_VALUE = "ADDED";
 
 
@@ -46,11 +46,11 @@ public class IdeaController {
                               @RequestParam(value = "limit", defaultValue = DEFAULT_LIMIT_VALUE) int limit,
                               @RequestParam(value = "sort", defaultValue = DEFAULT_SORT_VALUE) SortEnum sort, HttpSession session, HttpServletRequest request, User user) throws Exception {
 
-
         if (request.getSession().getAttribute("sort") != null) {
-            session.setAttribute("sort", ideaService.getOrders(SortEnum.SCORE, session));
+            session.setAttribute("sort", SortEnum.SCORE);
         }
         Page<IdeaDTO> ideas = ideaService.fetchAllIdeas(page, limit, sort, session);
+        model.addAttribute("currentPage", page);
         model.addAttribute("idea", ideas);
         model.addAttribute("allPages", ideas.getTotalPages());
         model.addAttribute("sortingTypes", EnumSet.allOf(SortEnum.class));

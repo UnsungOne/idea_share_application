@@ -1,32 +1,62 @@
 $(document).ready(function () {
+    $('.table .eBtn').on('click', function(e) {
+        e.preventDefault();
 
-$('#ideaUp').on('submit', function(e) {
-  e.preventDefault();
-    var $dataElements = $('#ideaId').find('td').val(),
-    data = [];
+        var link = $(this).attr('href');
+        $.get(link, function (idea, status) {
+            $('.ideaEditForm #title').val(idea.title);
+            $('.ideaEditForm #description').val(idea.description);
+        });
 
- $.each($dataElements, function(i, elem){
-        data.push($(elem).html());
+        $('.ideaEditForm #idea').modal();
+
     });
 
-        $.ajax({
-            type : "POST",
-            contentType : "application/json",
-            url :'/idea/rateUp/'+ data,
-            data :{ data },
+});
 
-           success: function(idea) {
-                 var respContent = "";
-                 respContent += "<p class='success'>";
-                 respContent += idea.score + "</p>";
-                   console.log("data " + id);
 
-                 $("#sPhoneFromResponse").html(respContent);
-             }
-         });
 
-        event.preventDefault();
-    });
+
+
+
+
+
+
+
+
+
+
+
+//
+//
+//
+// $('#ideaUp').on('submit', function(e) {
+//   e.preventDefault();
+//     var $dataElements = $('#ideaId').find('td').val(),
+//     data = [];
+//
+//  $.each($dataElements, function(i, elem){
+//         data.push($(elem).html());
+//     });
+//
+//         $.ajax({
+//             type : "POST",
+//             contentType : "application/json",
+//             url :'/idea/rateUp/'+ data,
+//             data :{ data },
+//
+//            success: function(idea) {
+//                  var respContent = "";
+//                  respContent += "<p class='success'>";
+//                  respContent += idea.score + "</p>";
+//                    console.log("data " + id);
+//
+//                  $("#sPhoneFromResponse").html(respContent);
+//              }
+//          });
+//
+//         event.preventDefault();
+//     });
 
 //
 //    $('#ideaDown').submit(function(event) {
@@ -57,4 +87,3 @@ $('#ideaUp').on('submit', function(e) {
 //
 //        event.preventDefault();
 //    });
-});
