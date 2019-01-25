@@ -53,9 +53,9 @@ public class LoginController {
         User loggedInUser = userService.findUserByEmailAndPassword(user.getEmail(), user.getPassword());
         request.getSession().setAttribute("user", loggedInUser);
         request.getSession().setAttribute("name", loggedInUser.getName());
-        request.setAttribute("canVote", userService.isEligibleToVote(loggedInUser.getId()));
+        request.getSession().setAttribute("voting", loggedInUser.isVoted());
+        request.getSession().setAttribute("canVote", userService.isEligibleToVote(loggedInUser.getId()));
         return "redirect:/";
-
 
     }
 

@@ -36,19 +36,22 @@ public class IdeaService {
                 .orElseThrow(() -> new Exception("Nie znaleziono produktu o id: " + id));
     }
 
-    public Page<IdeaDTO> fetchAllIdeas(int page, int limit, SortEnum sortPhrase) {
-        Sort sort = getOrders(sortPhrase);
+    public Page<IdeaDTO> fetchAllIdeas(int page, int limit, SortEnum sortPhrase, HttpSession session) {
+        Sort sort = getOrders(sortPhrase, session);
         Page<Idea> ideaEntities = ideaRepository.fetchAll(PageRequest.of(page, limit, sort));
         Page<IdeaDTO> ideaDTO = ideaEntities.map(ModelMapper::maoToDTO);
         return ideaDTO;
     }
 
-    public Sort getOrders(SortEnum sortPhrase) {
+    public Sort getOrders(SortEnum sortPhrase, HttpSession session) {
         if (sortPhrase.equals(SortEnum.ADDED)) {
+            session.setAttribute("sort", new Sort(Sort.Direction.DESC, "added"));
             return new Sort(Sort.Direction.DESC, "added");
         } else if (sortPhrase.equals(SortEnum.SCORE)) {
+            session.setAttribute("sort", new Sort(Sort.Direction.DESC, "score"));
             return new Sort(Sort.Direction.DESC, "score");
         } else {
+            session.setAttribute("sort", new Sort(Sort.Direction.DESC, "added"));
             return new Sort(Sort.Direction.DESC, "added");
         }
     }
@@ -69,8 +72,8 @@ public class IdeaService {
         return ideaRepository.rateIdeaDown(ideaId);
     }
 
-//    public boolean canEditSelectedIdeas(HttpSession session) {
-//        if (ideaRepository.fetchData().getId()==determinieUserId(session)){
+//    public boolean canEditSelectedIdeas(int id) {
+//        if (ideaRepository.fetchData().getId()==id)){
 //          return true;
 //        } else return false;
 //
