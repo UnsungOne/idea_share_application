@@ -1,7 +1,6 @@
 package com.idea.share.com.idea.share.validator;
 
 import com.idea.share.com.idea.share.idea.Idea;
-import com.idea.share.com.idea.share.idea.IdeaDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

@@ -1,6 +1,5 @@
 package com.idea.share.com.idea.share.validator;
 
-import com.idea.share.com.idea.share.user.User;
 import com.idea.share.com.idea.share.user.UserLoginDTO;
 import com.idea.share.com.idea.share.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +20,12 @@ public class UserLoginDTOValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return User.class.equals(aClass);
+        return UserLoginDTO.class.equals(aClass);
     }
 
     @Override
     public void validate(Object o, Errors errors) {
-        User user  = (User) o;
+        UserLoginDTO user  = (UserLoginDTO) o;
         ValidationUtils.rejectIfEmpty(errors, "email", "user.validator.field.notEmpty");
         ValidationUtils.rejectIfEmpty(errors, "password", "user.validator.field.notEmpty");
 

@@ -28,10 +28,4 @@ public class Idea implements Serializable {
     @JoinColumn(name = "iduser")
     private User user;
 
-    @Override
-    public String toString() {
-        return "Idea{" +
-                "id=" + id +
-                '}';
-    }
 }

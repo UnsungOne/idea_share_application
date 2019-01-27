@@ -1,14 +1,15 @@
 $(document).ready(function () {
-    $('.table .eBtn').on('click', function(e) {
-        e.preventDefault();
+    $('.table .edit').on('click', function(event) {
+        event.preventDefault();
 
         var link = $(this).attr('href');
-        $.get(link, function (idea, status) {
-            $('.ideaEditForm #title').val(idea.title);
-            $('.ideaEditForm #description').val(idea.description);
+        $.get(link, function (idea) {
+            $('.myForm #id').val(idea.id);
+            $('.myForm #title').val(idea.title);
+            $('.myForm #description').val(idea.description);
         });
 
-        $('.ideaEditForm #idea').modal();
+        $('.myForm #idea').modal();
 
     });
 

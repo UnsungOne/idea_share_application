@@ -3,8 +3,6 @@ package com.idea.share.com.idea.share.idea;
 
 import com.idea.share.com.idea.share.user.User;
 import lombok.*;
-
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 @Getter

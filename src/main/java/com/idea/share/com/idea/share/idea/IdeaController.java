@@ -3,7 +3,6 @@ package com.idea.share.com.idea.share.idea;
 
 import com.idea.share.com.idea.share.configuration.EnumConverter;
 import com.idea.share.com.idea.share.sorting.SortEnum;
-import com.idea.share.com.idea.share.user.User;
 import com.idea.share.com.idea.share.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,7 +43,7 @@ public class IdeaController {
     @GetMapping("/")
     public String getMainPage(Model model, @RequestParam(value = "page", defaultValue = DEFAULT_PAGE_VALUE) int page,
                               @RequestParam(value = "limit", defaultValue = DEFAULT_LIMIT_VALUE) int limit,
-                              @RequestParam(value = "sort", defaultValue = DEFAULT_SORT_VALUE) SortEnum sort, HttpSession session, HttpServletRequest request, User user) throws Exception {
+                              @RequestParam(value = "sort", defaultValue = DEFAULT_SORT_VALUE) SortEnum sort, HttpSession session, HttpServletRequest request) {
 
         if (request.getSession().getAttribute("sort") != null) {
             session.setAttribute("sort", SortEnum.SCORE);

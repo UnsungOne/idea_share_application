@@ -9,13 +9,11 @@
 <div layout:fragment="content">
     <div class="container main-content">
         <div class="row">
-            <h3 th:text="${session.user}"></h3>
             <div class="dropdown">
-                <h4>Sortowanie:</h4>
                 <select class="form-controlcol-md-6" id="sortingTwypes" th:field="*{sortingTypes}"
                         onchange="window.location.href=this.value">
                     <div>
-                        <option selected="" value="">Select</option>
+                        <option selected="" value="">Sortuj wg:</option>
                         <option th:each="sortingType : ${sortingTypes}"
                                 th:value="@{'/ideas/?sort='}+${sortingType}"
                                 th:text="${sortingType.getValues()}">
@@ -42,8 +40,7 @@
                     <td th:text="${idea.description}"></td>
                     <td th:text="${idea.added}"></td>
                     <td th:text="${idea.score}"></td>
-                    <td><a th:href="@{'/edit/'}+${idea.id}" class="btn btn-success btn-sm" data-toggle="modal"
-                           data-target="#idea">
+                    <td><a th:href="@{find/(id=${idea.id})}" class="btn btn-success btn-sm edit" data-target="#idea">
                         <span class="glyphicon glyphicon-edit"></span>
                     </a>
                     </td>
@@ -52,47 +49,50 @@
                 </form>
                 </tbody>
             </table>
-
-            <form id="ideaEditForm" role="form" th:action="@{/edit}" method="post">
-                <div class="modal fade" id="idea" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h3 class="modal-title">Edycja pomysłu</h3>
-                            </div>
-                            <div class="modal-body">
-
-                                <div class="form-group">
-                                    <label for="title" class="form-control-label">Tytuł:</label>
-                                    <input type="text" class="form-control" id="title" name="title" placeholder="Tytuł"
-                                           value="">
+            <div class="myForm">
+                <form th:action="@{/edit}" method="post" th:object="${newIdea}">
+                    <div class="modal fade" id="idea" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3 class="modal-title">Edycja pomysłu</h3>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="description" class="form-control-label">Opis:</label>
-                                    <input type="text" class="form-control" id="description" name="description"
-                                           placeholder="Opis" value="">
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="submit" class=" btn btn-primary" value="edit">Zapisz zmiany</button>
+                                <div class="modal-body">
+                                        <input type="text" class="form-control hidden" id="id" name="id"
+                                               placeholder="id"
+                                               value="">
+                                    <div class="form-group">
+                                        <label for="title" class="form-control-label">Tytuł:</label>
+                                        <input type="text" class="form-control" id="title" name="title"
+                                               placeholder="Tytuł"
+                                               value="">
+                                        <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-danger">Name Error</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="description" class="form-control-label">Opis:</label>
+                                        <textarea type="text" class="form-control" id="description" name="description"
+                                                  placeholder="Opis" value=""></textarea>
+                                        <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger">Name Error</div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class=" btn btn-primary" value="edit">Zapisz zmiany
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
-            <nav aria-label="Page navigation">
-                <hr>
-                <ul th:if="${allPages gt 0}" class="pagination">
-                    <li th:each="i : ${#numbers.sequence(0, allPages -1)}">
-                        <a th:href="@{'/ideas/?page='}+${i}+${'&sort='}+${session.sort}" th:text="${i+1}"></a>
-                    </li>
-                    <p>SORTOWANIE:</p>
-                    <p th:text="${session.sort}"></p>
-                </ul>
-            </nav>
+                </form>
+                <nav aria-label="Page navigation">
+                    <hr>
+                    <ul th:if="${allPages gt 0}" class="pagination">
+                        <li th:each="i : ${#numbers.sequence(0, allPages -1)}">
+                            <a th:href="@{'/ideas/?page='}+${i}+${'&sort='}+${session.sort}" th:text="${i+1}"></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
 </div>

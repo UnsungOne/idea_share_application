@@ -9,16 +9,13 @@
 <div layout:fragment="content">
     <div class="container main-content">
         <div class="row">
-
-            <h4 th:text="${session.canVote} ==true? 'Użytkownik nie może głosować' : ''"></h4>
             <h3 th:text="${session.user}"></h3>
+            <div class="form-message"></div>
             <div class="dropdown">
-
-                <h4>Sortowanie:</h4>
                 <select class="form-controlcol-md-6" id="sortingTwypes" th:field="*{sortingTypes}"
                         onchange="window.location.href=this.value">
                     <div>
-                        <option selected="" value="">Select</option>
+                        <option selected="" value="">Sortuj wg:</option>
                         <option th:each="sortingType : ${sortingTypes}"
                                 th:value="@{'/?sort='}+${sortingType}"
                                 th:text="${sortingType.getValues()}">
@@ -27,53 +24,50 @@
                 </select>
             </div>
             <hr>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Tytuł</th>
-                    <th scope="col">Opis</th>
-                    <th scope="col">Data utworzenia</th>
-                    <th scope="col">Wynik</th>
-                    <th scope="col">Autor</th>
-                    <th scope="col">Głosowanie</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="idea : ${idea}">
-                    <!--&lt;!&ndash;<form id="ideaUp"><input type="hidden" th:value="${idea.id}"></form>&ndash;&gt;-->
-                    <!--<input type="hidden" id="ideaId" th:value="${idea.id}">-->
-                    <td id="ideaId" class="ideaId" th:value="${idea.id}" th:text="${idea.id}"></td>
-                    <td th:text="${idea.title}"></td>
-                    <td th:text="${idea.description}"></td>
-                    <td th:text="${idea.added}"></td>
-                    <td id="sPhoneFromResponse" th:text="${idea.score}"></td>
-                    <td th:text="${idea.user.name}"></td>
-                    <td>
-                        <div th:class="${session.canVote} ==true ? 'btn-group btn-group-sm': ''">
-                            <form class="ideaUp" id="ideaUp">
-                                <button type="submit" class="btn btn-default btn-sm glyphicon-plus"></button>
-                            </form>
-                            <form class="ideaDown" id="ideaDown">
-                                <button type="submit" class="btn btn-default btn-sm glyphicon-minus"></button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
+            <div class="myTable">
+                <form id="ideaForm" class="ideaForm">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Tytuł</th>
+                            <th scope="col">Opis</th>
+                            <th scope="col">Data utworzenia</th>
+                            <th scope="col">Wynik</th>
+                            <th scope="col">Autor</th>
+                            <th scope="col">Głosowanie</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="idea : ${idea}">
+                            <input type="hidden" id="ideaId" th:value="${idea.id}"> <input type="hidden" id="ideaId" th:value="${idea.id}">
+                            <td id="ideaTitle" th:text="${idea.title}"></td>
+                            <td th:text="${idea.description}"></td>
+                            <td th:text="${idea.added}"></td>
+                            <td id="sPhoneFromResponse" th:text="${idea.score}"></td>
+                            <td th:text="${idea.user.name}"></td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="submit" class="btn btn-info btn-sm glyphicon-plus rateUp"
+                                            id="rateUp"></button>
+                                    <button type="submit" class="btn btn-danger btn-sm glyphicon-minus rateDown"
+                                            id="rateDown"></button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </form>
-                </tbody>
-            </table>
-
-                <hr>
+            </div>
+            <hr>
             <nav aria-label="Page navigation">
-            <ul class="pagination">
-                    <li  th:classappend="${currentPage}== ${i} ? 'active' : ''" th:each="i : ${#numbers.sequence(0, allPages -1)}">
+                <ul class="pagination">
+                    <li th:classappend="${currentPage}== ${i} ? 'active' : ''"
+                        th:each="i : ${#numbers.sequence(0, allPages -1)}">
                         <a th:href="@{'/?page='}+${i}+${'&sort='}+${session.sort}" th:text="${i + 1}"></a>
-                           </li>
+                    </li>
                 </ul>
             </nav>
-            <p>SORTOWANIE:</p>
-            <p th:text="${session.sort}"></p>
+            </h5>
         </div>
     </div>
 </div>

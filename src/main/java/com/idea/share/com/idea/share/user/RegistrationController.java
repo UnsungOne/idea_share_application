@@ -1,6 +1,6 @@
 package com.idea.share.com.idea.share.user;
 
-import com.idea.share.com.idea.share.idea.IdeaDTO;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

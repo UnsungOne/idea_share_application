@@ -1,20 +1,19 @@
 package com.idea.share.com.idea.share.user;
 
-import com.idea.share.com.idea.share.dto.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
@@ -39,22 +38,20 @@ public class LoginController {
         if (request.getSession().getAttribute("user") != null) {
             return "redirect:/";
         } else {
-            model.addAttribute("user", new User());
+            model.addAttribute("user", new UserLoginDTO());
             return "login";
         }
     }
 
     @PostMapping("/login")
-    public String loginUser(@ModelAttribute("user") @Validated User user, BindingResult bindingResult, Model model, HttpServletRequest request) throws Exception {
+    public String loginUser(@ModelAttribute("user") @Validated UserLoginDTO userLoginDTO, BindingResult bindingResult, HttpServletRequest request) {
 
         if (bindingResult.hasErrors()) {
             return "login";
         }
-        User loggedInUser = userService.findUserByEmailAndPassword(user.getEmail(), user.getPassword());
+        User loggedInUser = userService.findUserByEmailAndPassword(userLoginDTO.getEmail(), userLoginDTO.getPassword());
         request.getSession().setAttribute("user", loggedInUser);
         request.getSession().setAttribute("name", loggedInUser.getName());
-        request.getSession().setAttribute("voting", loggedInUser.isVoted());
-        request.getSession().setAttribute("canVote", userService.isEligibleToVote(loggedInUser.getId()));
         return "redirect:/";
 
     }

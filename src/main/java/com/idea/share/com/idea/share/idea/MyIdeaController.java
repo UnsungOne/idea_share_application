@@ -3,13 +3,15 @@ package com.idea.share.com.idea.share.idea;
 import com.idea.share.com.idea.share.configuration.EnumConverter;
 import com.idea.share.com.idea.share.sorting.SortEnum;
 import com.idea.share.com.idea.share.user.User;
-import com.idea.share.com.idea.share.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,24 +24,25 @@ public class MyIdeaController {
     private static final String DEFAULT_LIMIT_VALUE = "4";
     private static final String DEFAULT_SORT_VALUE = "ADDED";
     private final IdeaService ideaService;
-    private final UserService userService;
 
 
     @Autowired
-    public MyIdeaController(IdeaService ideaService, UserService userService) {
+    public MyIdeaController(IdeaService ideaService) {
         this.ideaService = ideaService;
-        this.userService = userService;
+
     }
 
     @InitBinder
-    public void initBinder(WebDataBinder dataBinder) {
+    public void initBinding(WebDataBinder dataBinder) {
         dataBinder.registerCustomEditor(SortEnum.class, new EnumConverter());
+
     }
 
     @GetMapping("/ideas")
     public String getIdeasCreatedByUserPage(Model model, @RequestParam(value = "page", defaultValue = DEFAULT_PAGE_VALUE) int page,
                                             @RequestParam(value = "limit", defaultValue = DEFAULT_LIMIT_VALUE) int limit,
-                                            @RequestParam(value = "sort", defaultValue = DEFAULT_SORT_VALUE) SortEnum sort, HttpSession session, HttpServletRequest request, @SessionAttribute User user) {
+                                            @RequestParam(value = "sort", defaultValue = DEFAULT_SORT_VALUE) SortEnum sort, HttpSession session, HttpServletRequest request,
+                                            @SessionAttribute User user) {
 
         if (session.getAttribute("user") == null) {
             return "redirect:/";
@@ -51,6 +54,7 @@ public class MyIdeaController {
 
             Page<IdeaDTO> ideas = ideaService.fetchMyIdeas(user.getId(), page, limit, sort, session);
             model.addAttribute("idea", ideas);
+            model.addAttribute("newIdea", new Idea());
             model.addAttribute("allPages", ideas.getTotalPages());
             model.addAttribute("sortingTypes", EnumSet.allOf(SortEnum.class));
             return "myideas";
@@ -58,14 +62,4 @@ public class MyIdeaController {
 
     }
 
-    @PostMapping("/edit/")
-    public String edit(@SessionAttribute User user, @ModelAttribute Idea idea) throws Exception {
-        ideaService.updateExistingIdea(idea.getTitle(), idea.getDescription(), idea.getId());
-        return "redirect:/ideas";
-    }
-
 }
-
-
-
-

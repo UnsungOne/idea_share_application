@@ -14,7 +14,6 @@ public class LogoutController {
         if (session.getAttribute("user") == null) {
             return "redirect:/";
         } else {
-
             session.removeAttribute("user");
             session.invalidate();
             status.setComplete();

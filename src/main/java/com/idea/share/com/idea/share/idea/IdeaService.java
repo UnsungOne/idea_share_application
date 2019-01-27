@@ -2,7 +2,6 @@ package com.idea.share.com.idea.share.idea;
 
 import com.idea.share.com.idea.share.dto.ModelMapper;
 import com.idea.share.com.idea.share.sorting.SortEnum;
-import com.idea.share.com.idea.share.user.User;
 import com.idea.share.com.idea.share.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,10 +11,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class IdeaService {
@@ -32,23 +27,28 @@ public class IdeaService {
     public IdeaRateDTO getIdeaById(Integer id) throws Exception {
         return ideaRepository
                 .findById(id)
-                .map(ModelMapper::maoToRateDTO)
+                .map(ModelMapper::maoToRateDTOFromIdea)
                 .orElseThrow(() -> new Exception("Nie znaleziono produktu o id: " + id));
     }
 
+    public IdeaEditDTO findIdeaById(Integer id) throws Exception {
+        return ideaRepository
+                .findById(id)
+                .map(ModelMapper::mapToIdeaEditDTOFromIdea)
+                .orElseThrow(() -> new Exception("Nie znaleziono produktu o id: " + id));
+    }
 
     public Page<IdeaDTO> fetchMyIdeas(int user, int page, int limit, SortEnum sortPhrase, HttpSession session) {
         Sort sort = getOrders(sortPhrase, session);
         Page<Idea> ideaEntities = ideaRepository.fetchUserIdeas(user, PageRequest.of(page, limit, sort));
-        Page<IdeaDTO> ideaDTO = ideaEntities.map(ModelMapper::maoToDTO);
+        Page<IdeaDTO> ideaDTO = ideaEntities.map(ModelMapper::mapToIdeaDTOFromIdea);
         return ideaDTO;
     }
-
 
     public Page<IdeaDTO> fetchAllIdeas(int page, int limit, SortEnum sortPhrase, HttpSession session) {
         Sort sort = getOrders(sortPhrase, session);
         Page<Idea> ideaEntities = ideaRepository.fetchAll(PageRequest.of(page, limit, sort));
-        Page<IdeaDTO> ideaDTO = ideaEntities.map(ModelMapper::maoToDTO);
+        Page<IdeaDTO> ideaDTO = ideaEntities.map(ModelMapper::mapToIdeaDTOFromIdea);
         return ideaDTO;
     }
 
@@ -73,49 +73,16 @@ public class IdeaService {
         ideaRepository.save((idea));
     }
 
-    public void updateExistingIdea(String title, String description, int IdeaId) {
-        ideaRepository.updateExistingIdea(title, description, IdeaId);
+    public void updateExistingIdea(String title, String description, int id) throws Exception {
+        ideaRepository.updateExistingIdea(title, description, id);
+    }
+
+    public void rateIdeaUp(Integer ideaId) {
+        ideaRepository.rateIdeaUp(ideaId);
     }
 
 
-    public int rateIdeaUp(Integer ideaId) {
-        return ideaRepository.rateIdeaUp(ideaId);
+    public void rateIdeaDown(Integer ideaId) {
+        ideaRepository.rateIdeaDown(ideaId);
     }
-
-    public int rateIdeaDown(Integer ideaId) {
-        return ideaRepository.rateIdeaDown(ideaId);
-    }
-
-//    public boolean canEditSelectedIdeas(int id) {
-//        if (ideaRepository.fetchData().getId()==id)){
-//          return true;
-//        } else return false;
-//
-//    }
-
-//    public List<Idea> canEditSelectedIdeas1(HttpSession session) {
-//        if (ideaRepository.fetchData().stream()
-//                .allMatch(idea -> idea.getUser().getId() == determinieUserId(session))) return true;
-//        else return false;
-//
-//        List<Idea> nonEditableIdeas = new ArrayList<>();
-//        for (Idea idea : ideaRepository.fetchData()) {
-//            if (idea.getUser().getId() == determinieUserId(session)) {
-//                nonEditableIdeas.add(idea);
-//            }
-//            System.out.println(nonEditableIdeas.toString());
-
-//        return nonEditableIdeas;
-//       Idea
-//                .filter(idea -> idea.getUser().getId() == determinieUserId(session)) return true;
-//        else return false;
-//
-//
-
-//        }
-//        return nonEditableIdeas;
-//
-//    }
-
-
 }
