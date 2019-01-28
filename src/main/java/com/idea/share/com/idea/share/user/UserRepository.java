@@ -17,4 +17,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
      @Query(value = "UPDATE users SET voted = true WHERE id = :entryId", nativeQuery = true)
      void changeVoteStatusToTrue(@Param("entryId") Integer ideaId);
 
+     @Query(value = "SELECT * FROM users WHERE email = :email", nativeQuery = true)
+     User userWithGivenEmail(@Param("email") String email);
+
 }

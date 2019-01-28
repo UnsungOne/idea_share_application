@@ -27,7 +27,7 @@ $(document).ready(function () {
                 .fail(function () {
                     $('.form-message').html("<div class=\"alert alert-danger fade in\">\n" +
                         "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>\n" +
-                        "    <strong>Oops!</strong> Musisz się zalogować, aby móc głosować głosować.\n" +
+                        "    <strong>Oops!</strong> Musisz się zalogować, aby móc głosować.\n" +
                         "</div>");
 
                 });
