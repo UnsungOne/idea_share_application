@@ -31,7 +31,6 @@ public class RegistrationController {
     @GetMapping("/register")
     String getRegistrationPage(Model model) {
         model.addAttribute("user", new UserDTO());
-        System.out.println(userService.findAllUsers());
         return "registration";
     }
 

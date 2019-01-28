@@ -34,10 +34,6 @@ public class UserService {
 
     }
 
-    public List<User> findAllUsers() {
-        return (List<User>) userRepository.findAll();
-    }
-
     public User findUserById(int userId) throws Exception {
         return userRepository.findById(userId).orElseThrow(() -> new Exception("Nie znaleziono produktu o id: " + userId));
     }
