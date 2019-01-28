@@ -29,7 +29,7 @@ public class UserLoginDTOValidator implements Validator {
         ValidationUtils.rejectIfEmpty(errors, "email", "user.validator.field.notEmpty");
         ValidationUtils.rejectIfEmpty(errors, "password", "user.validator.field.notEmpty");
 
-        if (userService.findUserByEmailAndPassword(user.getEmail(), user.getPassword()) == null) {
+        if (userService.loginUser(user.getEmail(), user.getPassword()) == null) {
             errors.rejectValue("password", "user.validator.field.LoginError");
         }
     }
