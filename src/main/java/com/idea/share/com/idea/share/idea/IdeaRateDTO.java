@@ -8,6 +8,5 @@ import lombok.*;
 @ToString
 @Builder
 public class IdeaRateDTO {
-    private Integer id;
     private int score;
 }

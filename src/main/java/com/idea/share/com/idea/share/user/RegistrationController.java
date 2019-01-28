@@ -1,6 +1,5 @@
 package com.idea.share.com.idea.share.user;
 
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,9 +43,9 @@ public class RegistrationController {
         }
 
         userService.registerUser(userDTO);
-        User userByEmailAndPassword = userService.findUserByEmailAndPassword(userDTO.getEmail(), userDTO.getPassword());
-        session.setAttribute("user", userByEmailAndPassword);
-        session.setAttribute("name", userByEmailAndPassword.getName());
+        User registeredUser = userService.loginUser(userDTO.getEmail(), userDTO.getPassword());
+        session.setAttribute("user", registeredUser);
+        session.setAttribute("name", registeredUser.getName());
         return "redirect:/";
 
     }

@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
 
-     User findUserByEmailAndPassword(String email, String password);
+     User findUserByEmail(String email);
 
      @Modifying
      @Query(value = "UPDATE users SET voted = true WHERE id = :entryId", nativeQuery = true)

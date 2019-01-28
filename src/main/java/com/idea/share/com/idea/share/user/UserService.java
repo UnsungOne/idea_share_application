@@ -27,10 +27,13 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User findUserByEmailAndPassword(String email, String enteredPassword) {
-
-        //TODO -  implement simple password encryption using BCrypt
-        return userRepository.findUserByEmailAndPassword(email, enteredPassword);
+    public User loginUser(String email, String enteredPassword) {
+        User userLoginDTO = userRepository.findUserByEmail(email);
+        if (userLoginDTO != null) {
+            if (BCrypt.checkpw(enteredPassword, userLoginDTO.getPassword()))
+                return userLoginDTO;
+        }
+        return null;
 
     }
 
@@ -38,8 +41,8 @@ public class UserService {
         return userRepository.findById(userId).orElseThrow(() -> new Exception("Nie znaleziono produktu o id: " + userId));
     }
 
-    public void makeUserAlreadyVoted(Integer id) {
-        userRepository.changeVoteStatusToTrue(id);
+    public void makeUserAlreadyVoted(Integer userId) {
+        userRepository.changeVoteStatusToTrue(userId);
     }
 
     public boolean isEligibleToVote(Integer id, HttpServletRequest request) throws Exception {

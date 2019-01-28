@@ -24,7 +24,7 @@ public interface IdeaRepository extends PagingAndSortingRepository <Idea, Intege
     void rateIdeaDown(@Param("entryId") Integer ideaId);
 
     @Query(value = "SELECT * FROM ideas WHERE active = true", nativeQuery = true)
-    Page<Idea> fetchAll(PageRequest pageRequest);
+    Page<Idea> fetchAllActiveIdeas(PageRequest pageRequest);
 
     @Query(value = "SELECT * FROM ideas WHERE iduser = :entryId ", nativeQuery = true)
     Page<Idea> fetchUserIdeas(@Param("entryId") Integer ideaId, Pageable pageRequest);

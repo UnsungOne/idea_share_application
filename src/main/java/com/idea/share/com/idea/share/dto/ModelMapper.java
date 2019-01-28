@@ -25,7 +25,6 @@ public class ModelMapper {
 
     public static IdeaRateDTO maoToRateDTOFromIdea(Idea idea) {
         return IdeaRateDTO.builder()
-                .id(idea.getId())
                 .score(idea.getScore())
                 .build();
     }

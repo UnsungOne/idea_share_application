@@ -49,10 +49,14 @@ public class LoginController {
         if (bindingResult.hasErrors()) {
             return "login";
         }
-        User loggedInUser = userService.findUserByEmailAndPassword(userLoginDTO.getEmail(), userLoginDTO.getPassword());
-        request.getSession().setAttribute("user", loggedInUser);
-        request.getSession().setAttribute("name", loggedInUser.getName());
-        return "redirect:/";
+        User loggedInUser = userService.loginUser(userLoginDTO.getEmail(), userLoginDTO.getPassword());
+        if (loggedInUser == null) {
+            return "login";
+        } else {
+            request.getSession().setAttribute("user", loggedInUser);
+            request.getSession().setAttribute("name", loggedInUser.getName());
+            return "redirect:/";
+        }
 
     }
 

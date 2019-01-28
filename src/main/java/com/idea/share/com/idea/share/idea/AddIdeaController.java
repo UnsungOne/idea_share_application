@@ -1,6 +1,7 @@
 package com.idea.share.com.idea.share.idea;
 
 import com.idea.share.com.idea.share.user.User;
+import com.idea.share.com.idea.share.user.UserDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +10,8 @@ import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -40,12 +43,13 @@ public class AddIdeaController {
     }
 
     @PostMapping("/addIdea")
-    public String addIdea(@ModelAttribute("idea") @Validated Idea idea, BindingResult bindingResult, @SessionAttribute User user) throws Exception {
+    public String addIdea(@ModelAttribute("idea") @Validated Idea idea, BindingResult bindingResult, @SessionAttribute User user, HttpServletRequest request) throws Exception {
 
         if (bindingResult.hasErrors()) {
             return "add_idea";
         }
         ideaService.addIdea(idea, user.getId());
+        request.getSession().setAttribute("user", user);
         return "redirect:/";
     }
 }

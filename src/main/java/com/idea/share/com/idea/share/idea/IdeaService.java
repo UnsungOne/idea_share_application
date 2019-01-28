@@ -47,7 +47,7 @@ public class IdeaService {
 
     public Page<IdeaDTO> fetchAllIdeas(int page, int limit, SortEnum sortPhrase, HttpSession session) {
         Sort sort = getOrders(sortPhrase, session);
-        Page<Idea> ideaEntities = ideaRepository.fetchAll(PageRequest.of(page, limit, sort));
+        Page<Idea> ideaEntities = ideaRepository.fetchAllActiveIdeas(PageRequest.of(page, limit, sort));
         Page<IdeaDTO> ideaDTO = ideaEntities.map(ModelMapper::mapToIdeaDTOFromIdea);
         return ideaDTO;
     }
