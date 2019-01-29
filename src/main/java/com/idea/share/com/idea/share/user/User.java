@@ -24,7 +24,7 @@ public class User {
     private String password;
     private boolean voted;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Idea> ideas = new ArrayList<>();
+    private List<Idea> ideas;
 
     @Override
     public String toString() {

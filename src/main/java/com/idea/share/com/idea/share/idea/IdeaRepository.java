@@ -10,6 +10,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Transactional
 @Repository
@@ -32,5 +34,8 @@ public interface IdeaRepository extends PagingAndSortingRepository <Idea, Intege
     @Modifying
     @Query("UPDATE Idea i SET i.title= ?1, i.description = ?2 WHERE id = ?3")
     void updateExistingIdea(String title, String description, Integer entryId);
+
+    @Query(value = "SELECT * FROM ideas WHERE iduser = :entryId ", nativeQuery = true)
+    List <Idea> getIdeasCreatedByUser(@Param("entryId")Integer userId);
 
 }

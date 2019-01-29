@@ -11,12 +11,15 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class IdeaService {
 
-    private final IdeaRepository ideaRepository;
-    private final UserService userService;
+    private IdeaRepository ideaRepository;
+    private UserService userService;
+
 
     @Autowired
     public IdeaService(IdeaRepository ideaRepository, UserService userService) {
@@ -85,4 +88,19 @@ public class IdeaService {
     public void rateIdeaDown(Integer ideaId) {
         ideaRepository.rateIdeaDown(ideaId);
     }
+
+    public boolean determineIfUserIsAuthorOfGivenIdea(Integer userId, Integer ideaId) {
+        List<Integer> collect = ideaRepository.getIdeasCreatedByUser(userId)
+                .stream()
+                .map(idea -> idea.getId())
+                .collect(Collectors.toList());
+
+        if (collect.contains(ideaId)) {
+            return true;
+        } else {
+            return false;
+
+        }
+    }
+
 }
