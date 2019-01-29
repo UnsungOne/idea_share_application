@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     var id = $('#ideaId').val();
-    var json = {"id": id};
+    var json = {"id=": id};
 
     $('#rateUp').on('click', function () {
 
@@ -20,7 +20,7 @@ $(document).ready(function () {
                     var respContent = "";
                     respContent += "<p class='success'>";
                     respContent += idea.score + "</p>";
-                    $("#sPhoneFromResponse").html(respContent);
+                    $("#ideaScore").html(respContent);
 
                 })
 
@@ -51,14 +51,14 @@ $(document).ready(function () {
                     var respContent = "";
                     respContent += "<p class='success'>";
                     respContent += idea.score + "</p>";
-                    $("#sPhoneFromResponse").html(respContent);
+                    $("#ideaScore").html(respContent);
 
                 })
 
                 .fail(function () {
                     $('.form-message').html("<div class=\"alert alert-danger fade in\">\n" +
                         "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>\n" +
-                        "    <strong>Oops!</strong> Musisz się zalogować, aby móc głosować głosować.\n" +
+                        "    <strong>Oops!</strong> Musisz się zalogować, aby móc głosować.\n" +
                         "</div>");
 
                 });

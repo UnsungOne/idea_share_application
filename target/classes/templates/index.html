@@ -9,10 +9,9 @@
 <div layout:fragment="content">
     <div class="container main-content">
         <div class="row">
-            <h3 th:text="${session.user}"></h3>
             <div class="form-message"></div>
             <div class="dropdown">
-                <select class="form-controlcol-md-6" id="sortingTwypes" th:field="*{sortingTypes}"
+                <select class="form-control-sm col-md-2 col-xs-6 center" id="sortingTypes" th:field="*{sortingTypes}"
                         onchange="window.location.href=this.value">
                     <div>
                         <option selected="" value="">Sortuj wg:</option>
@@ -39,11 +38,11 @@
                         </thead>
                         <tbody>
                         <tr th:each="idea : ${idea}">
-                            <input type="hidden" id="ideaId" th:value="${idea.id}"> <input type="hidden" id="ideaId" th:value="${idea.id}">
+                            <input class="hidden" id="ideaId" th:value="${idea.id}">
                             <td id="ideaTitle" th:text="${idea.title}"></td>
                             <td th:text="${idea.description}"></td>
                             <td th:text="${idea.added}"></td>
-                            <td id="sPhoneFromResponse" th:text="${idea.score}"></td>
+                            <td id="ideaScore" th:text="${idea.score}"></td>
                             <td th:text="${idea.user.name}"></td>
                             <td>
                                 <div class="btn-group">

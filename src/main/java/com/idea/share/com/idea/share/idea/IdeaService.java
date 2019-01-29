@@ -42,20 +42,20 @@ public class IdeaService {
     }
 
     public Page<IdeaDTO> fetchMyIdeas(int user, int page, int limit, SortEnum sortPhrase, HttpSession session) {
-        Sort sort = getOrders(sortPhrase, session);
+        Sort sort = getSortingTypes(sortPhrase, session);
         Page<Idea> ideaEntities = ideaRepository.fetchUserIdeas(user, PageRequest.of(page, limit, sort));
         Page<IdeaDTO> ideaDTO = ideaEntities.map(ModelMapper::mapToIdeaDTOFromIdea);
         return ideaDTO;
     }
 
     public Page<IdeaDTO> fetchAllIdeas(int page, int limit, SortEnum sortPhrase, HttpSession session) {
-        Sort sort = getOrders(sortPhrase, session);
+        Sort sort = getSortingTypes(sortPhrase, session);
         Page<Idea> ideaEntities = ideaRepository.fetchAllActiveIdeas(PageRequest.of(page, limit, sort));
         Page<IdeaDTO> ideaDTO = ideaEntities.map(ModelMapper::mapToIdeaDTOFromIdea);
         return ideaDTO;
     }
 
-    public Sort getOrders(SortEnum sortPhrase, HttpSession session) {
+    public Sort getSortingTypes(SortEnum sortPhrase, HttpSession session) {
         if (sortPhrase.equals(SortEnum.ADDED)) {
             session.setAttribute("sort", SortEnum.ADDED);
             return new Sort(Sort.Direction.DESC, "added");
@@ -95,12 +95,7 @@ public class IdeaService {
                 .map(idea -> idea.getId())
                 .collect(Collectors.toList());
 
-        if (collect.contains(ideaId)) {
-            return true;
-        } else {
-            return false;
-
-        }
+        return collect.contains(ideaId);
     }
 
 }

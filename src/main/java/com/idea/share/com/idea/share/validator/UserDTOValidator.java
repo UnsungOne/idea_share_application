@@ -10,6 +10,7 @@ import org.springframework.validation.Validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 @Component("userDTOValidator")
 public class UserDTOValidator implements Validator {
 
