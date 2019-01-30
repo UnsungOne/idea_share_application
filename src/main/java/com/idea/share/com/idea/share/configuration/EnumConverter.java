@@ -16,4 +16,5 @@ public class EnumConverter extends PropertyEditorSupport {
             setValue(SortEnum.ADDED);
         }
     }
+
 }
