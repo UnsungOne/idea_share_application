@@ -23,8 +23,17 @@ public class IdeaDTOValidator implements Validator {
         if (idea.getTitle().length() > 255) {
             errors.rejectValue("title", "idea.validator.field.tooLong");
         }
+
+        if (idea.getTitle().length() < 2) {
+            errors.rejectValue("title", "idea.validator.field.tooShort");
+        }
+
         if (idea.getDescription().length() > 255) {
             errors.rejectValue("description", "idea.validator.field.tooLong");
+        }
+
+        if (idea.getDescription().length() < 2) {
+            errors.rejectValue("description", "idea.validator.field.tooShort");
         }
 
     }
