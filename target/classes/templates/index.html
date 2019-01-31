@@ -11,7 +11,7 @@
         <div class="row">
             <div class="form-message"></div>
             <div class="dropdown">
-                <select class="form-control-sm col-md-2 col-xs-6 center" id="sortingTypes" th:field="*{sortingTypes}"
+                <select class="form-control-sm col-md-2 col-xs-12" id="sortingTypes" th:field="*{sortingTypes}"
                         onchange="window.location.href=this.value">
                     <div>
                         <option selected="" value="">Sortuj wg:</option>
@@ -23,7 +23,7 @@
                 </select>
             </div>
             <hr>
-            <div class="myTable">
+
                 <form id="ideaForm" class="ideaForm">
                     <table class="table">
                         <thead>
@@ -55,8 +55,10 @@
                         </tr>
                         </tbody>
                     </table>
+
+
                 </form>
-            </div>
+
             <hr>
             <nav aria-label="Page navigation">
                 <ul class="pagination">
