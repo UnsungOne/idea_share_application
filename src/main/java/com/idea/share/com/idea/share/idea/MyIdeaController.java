@@ -44,13 +44,14 @@ public class MyIdeaController {
                                             @RequestParam(value = "sort", defaultValue = DEFAULT_SORT_VALUE) SortEnum sort, HttpSession session, HttpServletRequest request,
                                             @SessionAttribute User user) {
 
-        if (session.getAttribute("user") == null) {
+
+        if (request.getSession().getAttribute("sort") != null) {
+            session.setAttribute("sort", SortEnum.SCORE);
+        }
+
+        if (user == null) {
             return "redirect:/";
         } else {
-
-            if (request.getSession().getAttribute("sort") != null) {
-                session.setAttribute("sort", SortEnum.SCORE);
-            }
 
             Page<IdeaDTO> ideas = ideaService.fetchMyIdeas(user.getId(), page, limit, sort, session);
             model.addAttribute("idea", ideas);
