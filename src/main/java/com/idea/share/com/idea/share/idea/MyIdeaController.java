@@ -42,16 +42,14 @@ public class MyIdeaController {
     public String getIdeasCreatedByUserPage(Model model, @RequestParam(value = "page", defaultValue = DEFAULT_PAGE_VALUE) int page,
                                             @RequestParam(value = "limit", defaultValue = DEFAULT_LIMIT_VALUE) int limit,
                                             @RequestParam(value = "sort", defaultValue = DEFAULT_SORT_VALUE) SortEnum sort, HttpSession session, HttpServletRequest request,
-                                            @SessionAttribute User user) {
+                                            User user) {
 
 
         if (request.getSession().getAttribute("sort") != null) {
             session.setAttribute("sort", SortEnum.SCORE);
         }
 
-        if (user == null) {
-            return "redirect:/";
-        } else {
+
 
             Page<IdeaDTO> ideas = ideaService.fetchMyIdeas(user.getId(), page, limit, sort, session);
             model.addAttribute("idea", ideas);
@@ -62,5 +60,3 @@ public class MyIdeaController {
         }
 
     }
-
-}
