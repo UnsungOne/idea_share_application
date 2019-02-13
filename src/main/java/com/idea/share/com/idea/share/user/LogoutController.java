@@ -10,14 +10,9 @@ import javax.servlet.http.HttpSession;
 public class LogoutController {
     @GetMapping("/logout")
     public String logOut(HttpSession session, SessionStatus status) {
-
-        if (session.getAttribute("user") == null) {
-            return "redirect:/";
-        } else {
             session.removeAttribute("user");
             session.invalidate();
             status.setComplete();
             return "redirect:/";
         }
     }
-}
