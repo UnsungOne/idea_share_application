@@ -8,10 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -42,23 +39,17 @@ public class MyIdeaController {
     public String getIdeasCreatedByUserPage(Model model, @RequestParam(value = "page", defaultValue = DEFAULT_PAGE_VALUE) int page,
                                             @RequestParam(value = "limit", defaultValue = DEFAULT_LIMIT_VALUE) int limit,
                                             @RequestParam(value = "sort", defaultValue = DEFAULT_SORT_VALUE) SortEnum sort, HttpSession session, HttpServletRequest request,
-                                            User user) {
-
+                                            @SessionAttribute User user) {
 
         if (request.getSession().getAttribute("sort") != null) {
             session.setAttribute("sort", SortEnum.SCORE);
         }
-
-
 
             Page<IdeaDTO> ideas = ideaService.fetchMyIdeas(user.getId(), page, limit, sort, session);
             model.addAttribute("idea", ideas);
             model.addAttribute("newIdea", new Idea());
             model.addAttribute("allPages", ideas.getTotalPages());
             model.addAttribute("sortingTypes", EnumSet.allOf(SortEnum.class));
-
-
             return "myideas";
         }
-
     }
