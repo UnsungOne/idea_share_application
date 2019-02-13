@@ -58,6 +58,8 @@ public class MyIdeaController {
             model.addAttribute("newIdea", new Idea());
             model.addAttribute("allPages", ideas.getTotalPages());
             model.addAttribute("sortingTypes", EnumSet.allOf(SortEnum.class));
+
+
             return "myideas";
         }
 
