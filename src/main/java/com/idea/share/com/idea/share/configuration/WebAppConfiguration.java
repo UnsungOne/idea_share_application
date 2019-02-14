@@ -1,9 +1,7 @@
 package com.idea.share.com.idea.share.configuration;
 
-import com.idea.share.com.idea.share.interceptor.AddIdeaInterceptor;
 import com.idea.share.com.idea.share.interceptor.IdeasInterceptor;
 import com.idea.share.com.idea.share.interceptor.LoginUserInterceptor;
-import com.idea.share.com.idea.share.interceptor.LogoutInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -16,17 +14,10 @@ public class WebAppConfiguration implements WebMvcConfigurer {
     LoginUserInterceptor loginUserInterceptor;
     @Autowired
     IdeasInterceptor ideasInterceptor;
-    @Autowired
-    AddIdeaInterceptor addIdeaInterceptor;
-    @Autowired
-    LogoutInterceptor logoutInterceptor;
-
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginUserInterceptor).addPathPatterns("/login");
         registry.addInterceptor(ideasInterceptor).addPathPatterns("/ideas");
-        registry.addInterceptor(addIdeaInterceptor).addPathPatterns("/add");
-        registry.addInterceptor(logoutInterceptor).addPathPatterns("/logout");
     }
 }

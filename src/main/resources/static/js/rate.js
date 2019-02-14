@@ -1,12 +1,12 @@
 $(document).ready(function () {
 
+    var id = $('#ideaId').val();
+    var json = {"id=": id};
+
     $('#rateUp').on('click', function () {
 
         $('#ideaForm').submit(function (event) {
-           event.preventDefault();
-          var id = $('#ideaId').val();
-            var json = {"id=": id};
-
+            event.preventDefault();
 
             $.ajax({
                 type: "POST",

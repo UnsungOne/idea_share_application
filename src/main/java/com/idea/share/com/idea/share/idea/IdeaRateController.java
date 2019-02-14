@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +23,7 @@ public class IdeaRateController {
         this.userService = userService;
     }
 
-    @PostMapping(value = "/idea/rateUp/{ideaId}")
+    @PostMapping(value = "/idea/rateUp/{ideaId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<IdeaRateDTO> rateIdeaUp(Model model, IdeaRateDTO ideaRateDTO, @PathVariable Integer ideaId, HttpServletRequest request, @SessionAttribute User user) throws Exception {
         if (!userService.isEligibleToVote(user.getId(), request)) {
             if (!ideaService.determineIfUserIsAuthorOfGivenIdea(user.getId(), ideaId)) {
@@ -37,7 +36,7 @@ public class IdeaRateController {
         return new ResponseEntity<>(ideaRateDTO, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/idea/rateDown/{ideaId}")
+    @PostMapping(value = "/idea/rateDown/{ideaId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<IdeaRateDTO> rateIdeaDown(IdeaRateDTO ideaRateDTO, @PathVariable Integer ideaId, HttpServletRequest request, @SessionAttribute User user) throws Exception {
         if (!userService.isEligibleToVote(user.getId(), request)) {
             if (!ideaService.determineIfUserIsAuthorOfGivenIdea(user.getId(), ideaId)) {

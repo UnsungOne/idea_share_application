@@ -15,15 +15,8 @@
 	<description>A project commissioned to check basic Java skills</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<maven.compiler.source>${java.version}</maven.compiler.source>
-
-		<groovy.version>2.5.2</groovy.version>
-		<junit-platform.version>1.2.0</junit-platform.version>
-		<jupiter.version>5.2.0</jupiter.version>
-		<spock.version>1.2-groovy-2.5</spock.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -62,12 +55,6 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
 			<version>3.2.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<version>${jupiter.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>nz.net.ultraq.thymeleaf</groupId>
@@ -123,17 +110,7 @@
 				</execution>
 			</executions>
 		</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
 		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-surefire-plugin</artifactId>
 			<version>2.22.1</version>
 			<configuration>
