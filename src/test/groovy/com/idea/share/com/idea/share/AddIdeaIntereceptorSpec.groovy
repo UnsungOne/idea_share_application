@@ -1,6 +1,7 @@
 package com.idea.share.com.idea.share
 
 import com.idea.share.com.idea.share.interceptor.AddIdeaInterceptor
+import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -24,6 +25,7 @@ class AddIdeaIntereceptorSpec extends Specification {
 //    }
 //
 //    @Unroll
+//    @Ignore
 //    def "checkIfTheInterceptorRedirectsUserIfSessionAttributeExists"(){
 //        when:
 //        def interceptor = addIdeaInterceptor.preHandle(request, response, null)
