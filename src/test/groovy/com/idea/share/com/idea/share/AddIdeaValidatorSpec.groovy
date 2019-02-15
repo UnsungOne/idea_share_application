@@ -6,8 +6,10 @@ import com.idea.share.com.idea.share.validator.IdeaDTOValidator
 import org.springframework.validation.Errors
 import spock.lang.Specification
 import spock.lang.Subject
+import spock.lang.Unroll
 
 class AddIdeaValidatorSpec extends Specification {
+
     @Subject
     IdeaDTOValidator ideaDTOValidator
     Idea idea
@@ -18,7 +20,7 @@ class AddIdeaValidatorSpec extends Specification {
         errors = Mock()
         ideaDTOValidator = new IdeaDTOValidator()
     }
-
+    @Unroll
     def "ToVerifyIfTheProperClassIsTested"() {
         when:
         def result = ideaDTOValidator.supports(clazz)

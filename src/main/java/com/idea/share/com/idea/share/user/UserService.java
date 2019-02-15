@@ -45,7 +45,7 @@ public class UserService {
 
     }
 
-    public User findUserById(int userId) throws Exception {
+    public User findUserById(Integer userId) throws Exception {
         return userRepository.findById(userId).orElseThrow(() -> new Exception("Nie znaleziono produktu o id: " + userId));
     }
 
@@ -53,8 +53,8 @@ public class UserService {
         userRepository.changeVoteStatusToTrue(userId);
     }
 
-    public boolean isEligibleToVote(Integer id, HttpServletRequest request) throws Exception {
-        if (findUserById(id).isVoted() || request.getSession().getAttribute("user") == null) {
+    public Boolean isEligibleToVote(Integer id, HttpServletRequest request) throws Exception {
+        if (findUserById(id).isVoted() == true || request.getSession().getAttribute("user") == null) {
             return true;
         } else {
             return false;
