@@ -1,5 +1,6 @@
 package com.idea.share.com.idea.share.idea;
 
+import com.idea.share.com.idea.share.exception.IdeaNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -35,10 +36,10 @@ public class EditMyIdeasController {
         return "redirect:/ideas";
     }
 
-    @GetMapping("/find")
+    @GetMapping("/find/{ideaId}")
     @ResponseBody
-    public IdeaEditDTO findOne(Integer id) throws Exception {
-        return ideaService.findIdeaById(id);
+    public IdeaEditDTO findOne(@PathVariable Integer ideaId) throws IdeaNotFoundException {
+        return ideaService.findIdeaById(ideaId);
     }
 
 }

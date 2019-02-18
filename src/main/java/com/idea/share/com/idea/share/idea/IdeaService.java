@@ -54,8 +54,7 @@ public class IdeaService {
         int resultPage = page >= 0 ? page : 0;
         Sort sort = getSortingTypes(sortPhrase, session);
         Page<Idea> ideaEntities = ideaRepository.fetchAllActiveIdeas(PageRequest.of(resultPage, limit, sort));
-        Page<IdeaDTO> ideaDTO = ideaEntities.map(ModelMapper::mapToIdeaDTOFromIdea);
-        return ideaDTO;
+        return ideaEntities.map(ModelMapper::mapToIdeaDTOFromIdea);
     }
 
     public Sort getSortingTypes(SortEnum sortPhrase, HttpSession session) {

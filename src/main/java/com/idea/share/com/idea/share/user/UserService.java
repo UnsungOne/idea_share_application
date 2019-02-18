@@ -32,15 +32,11 @@ public class UserService {
     }
 
     public void registerUser(UserDTO userDTO) {
-        try {
 
-            User user = ModelMapper.mapToUserFromUserDTO(userDTO);
-            String password = userDTO.getPassword();
-            user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
-            userRepository.save(user);
-        } catch (Exception | WrongHTTPVerb e){
-            e.getMessage();
-        }
+        User user = ModelMapper.mapToUserFromUserDTO(userDTO);
+        String password = userDTO.getPassword();
+        user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
+        userRepository.save(user);
 
     }
 
