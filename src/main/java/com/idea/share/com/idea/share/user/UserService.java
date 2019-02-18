@@ -1,6 +1,9 @@
 package com.idea.share.com.idea.share.user;
 
 import com.idea.share.com.idea.share.dto.ModelMapper;
+import com.idea.share.com.idea.share.exception.UserException;
+import com.idea.share.com.idea.share.exception.UserNotFoundException;
+import com.idea.share.com.idea.share.exception.WrongHTTPVerb;
 import com.idea.share.com.idea.share.idea.Idea;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +32,16 @@ public class UserService {
     }
 
     public void registerUser(UserDTO userDTO) {
-        User user = ModelMapper.mapToUserFromUserDTO(userDTO);
-        String password = userDTO.getPassword();
-        user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
-        userRepository.save(user);
+        try {
+
+            User user = ModelMapper.mapToUserFromUserDTO(userDTO);
+            String password = userDTO.getPassword();
+            user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
+            userRepository.save(user);
+        } catch (Exception | WrongHTTPVerb e){
+            e.getMessage();
+        }
+
     }
 
     public User loginUser(String email, String enteredPassword) {
@@ -45,8 +54,8 @@ public class UserService {
 
     }
 
-    public User findUserById(Integer userId) throws Exception {
-        return userRepository.findById(userId).orElseThrow(() -> new Exception("Nie znaleziono produktu o id: " + userId));
+    public User findUserById(Integer userId) throws UserNotFoundException {
+        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("Nie znaleziono użytkownika o id: " + userId));
     }
 
     public void makeUserAlreadyVoted(Integer userId) {

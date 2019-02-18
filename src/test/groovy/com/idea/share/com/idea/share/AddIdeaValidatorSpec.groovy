@@ -8,6 +8,8 @@ import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll
 
+import java.util.regex.Pattern
+
 class AddIdeaValidatorSpec extends Specification {
 
     @Subject
@@ -20,8 +22,10 @@ class AddIdeaValidatorSpec extends Specification {
         errors = Mock()
         ideaDTOValidator = new IdeaDTOValidator()
     }
+
     @Unroll
-    def "ToVerifyIfTheProperClassIsTested"() {
+    def "VerifyIfTheProperIdeaClassIsTested"() {
+
         when:
         def result = ideaDTOValidator.supports(clazz)
         then:
@@ -42,6 +46,6 @@ class AddIdeaValidatorSpec extends Specification {
         idea.getDescription() >> description
         where:
         title | description  | TooShortTitle | TooShortDescription
-        "a"   | "longenough" | 1                | 0
+        "a"   | "longenough" | 1             | 0
     }
 }

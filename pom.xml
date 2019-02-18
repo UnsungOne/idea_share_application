@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -15,8 +15,15 @@
 	<description>A project commissioned to check basic Java skills</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
 		<java.version>1.8</java.version>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+
+		<groovy.version>2.5.2</groovy.version>
+		<junit-platform.version>1.2.0</junit-platform.version>
+		<jupiter.version>5.2.0</jupiter.version>
+		<spock.version>1.2-groovy-2.5</spock.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -55,6 +62,12 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
 			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>${jupiter.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>nz.net.ultraq.thymeleaf</groupId>
@@ -97,30 +110,40 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-		<plugin>
-			<groupId>org.codehaus.gmavenplus</groupId>
-			<artifactId>gmavenplus-plugin</artifactId>
-			<version>1.6.2</version>
-			<executions>
-				<execution>
-					<goals>
-						<goal>compile</goal>
-						<goal>compileTests</goal>
-					</goals>
-				</execution>
-			</executions>
-		</plugin>
-		<plugin>
-			<artifactId>maven-surefire-plugin</artifactId>
-			<version>2.22.1</version>
-			<configuration>
-				<useFile>false</useFile>
-				<includes>
-					<include>**/*Spec.java</include>
-					<include>**/*Test.java</include>
-				</includes>
-			</configuration>
-		</plugin>
-	</plugins>
+			<plugin>
+				<groupId>org.codehaus.gmavenplus</groupId>
+				<artifactId>gmavenplus-plugin</artifactId>
+				<version>1.6.2</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>compileTests</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.1</version>
+				<configuration>
+					<useFile>false</useFile>
+					<includes>
+						<include>**/*Spec.java</include>
+						<include>**/*Test.java</include>
+					</includes>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 </project>

@@ -9,10 +9,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 public class ApplicationTest {
 
-
-
-
-
 	@Test
 	@Ignore
 	public void testIfIsEqual() {
