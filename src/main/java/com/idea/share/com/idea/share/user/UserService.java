@@ -1,17 +1,12 @@
 package com.idea.share.com.idea.share.user;
 
 import com.idea.share.com.idea.share.dto.ModelMapper;
-import com.idea.share.com.idea.share.exception.UserException;
 import com.idea.share.com.idea.share.exception.UserNotFoundException;
-import com.idea.share.com.idea.share.exception.WrongHTTPVerb;
-import com.idea.share.com.idea.share.idea.Idea;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -47,7 +42,6 @@ public class UserService {
                 return userLoginDTO;
         }
         return null;
-
     }
 
     public User findUserById(Integer userId) throws UserNotFoundException {
@@ -59,27 +53,6 @@ public class UserService {
     }
 
     public Boolean isEligibleToVote(Integer id, HttpServletRequest request) throws Exception {
-        if (findUserById(id).isVoted() == true || request.getSession().getAttribute("user") == null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean determineIfUserIsAuthorOfAGivenIdea(int ideaId, List<Idea> ideasCreatedByUser) {
-
-        if (ideasCreatedByUser == null) {
-            return false;
-        }
-        List<Integer> ideasIdCreatedByUser = ideasCreatedByUser
-                .stream()
-                .map(Idea::getId)
-                .collect(Collectors.toList());
-
-        if (ideasIdCreatedByUser.contains(ideaId)) {
-            return true;
-        } else {
-            return false;
-        }
+        return findUserById(id).isVoted() || request.getSession().getAttribute("user") == null;
     }
 }

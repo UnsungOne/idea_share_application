@@ -24,7 +24,7 @@
             </div>
             <hr>
             <div class="myTable">
-                <form id="ideaForm" class="ideaForm">
+
                     <table class="table">
                         <thead>
                         <tr>
@@ -38,6 +38,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="idea : ${idea}">
+
                             <input class="hidden" id="ideaId" th:value="${idea.id}">
                             <td id="ideaTitle" th:text="${idea.title}"></td>
                             <td th:text="${idea.description}"></td>
@@ -45,6 +46,7 @@
                             <td id="ideaScore" th:text="${idea.score}"></td>
                             <td th:text="${idea.user.name}"></td>
                             <td>
+                                <form id="ideaForm" class="ideaForm">
                                 <div class="btn-group">
                                     <button type="submit" class="btn btn-info btn-sm glyphicon-plus rateUp"
                                             id="rateUp"></button>
@@ -66,7 +68,6 @@
                     </li>
                 </ul>
             </nav>
-            </h5>
         </div>
     </div>
 </div>

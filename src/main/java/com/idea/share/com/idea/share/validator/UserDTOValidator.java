@@ -20,9 +20,6 @@ public class UserDTOValidator implements Validator {
         this.userService = userService;
     }
 
-    private final Pattern PASSSWORD_LENGTH = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$");
-    private final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
-
     @Override
     public boolean supports(Class<?> aClass) {
         return UserDTO.class.equals(aClass);
@@ -31,8 +28,8 @@ public class UserDTOValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         UserDTO userDTO = (UserDTO) o;
-        Matcher passwordMatcher = PASSSWORD_LENGTH.matcher(userDTO.getPassword());
-        Matcher emailMatcher = EMAIL_PATTERN.matcher(userDTO.getEmail());
+        Matcher passwordMatcher = Pattern.compile(ValidationRules.PASSSWORD_LENGTH).matcher(userDTO.getPassword());
+        Matcher emailMatcher = Pattern.compile(ValidationRules.EMAIL_PATTERN).matcher(userDTO.getEmail());
 
         ValidationUtils.rejectIfEmpty(errors, "name", "user.validator.field.notEmpty");
         ValidationUtils.rejectIfEmpty(errors, "email", "user.validator.field.notEmpty");

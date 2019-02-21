@@ -21,7 +21,6 @@ public class IdeaService {
     private IdeaRepository ideaRepository;
     private UserService userService;
 
-
     @Autowired
     public IdeaService(IdeaRepository ideaRepository, UserService userService) {
         this.ideaRepository = ideaRepository;
@@ -96,7 +95,6 @@ public class IdeaService {
                 .stream()
                 .map(Idea::getId)
                 .collect(Collectors.toList());
-
         return collect.contains(ideaId);
     }
 }

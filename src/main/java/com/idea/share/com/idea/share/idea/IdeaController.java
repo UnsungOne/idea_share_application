@@ -1,6 +1,5 @@
 package com.idea.share.com.idea.share.idea;
 
-
 import com.idea.share.com.idea.share.configuration.EnumConverter;
 import com.idea.share.com.idea.share.sorting.SortEnum;
 import com.idea.share.com.idea.share.user.UserService;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,17 +22,11 @@ public class IdeaController {
     private final IdeaService ideaService;
     private final UserService userService;
 
-    private static final String DEFAULT_PAGE_VALUE = "0";
-    private static final String DEFAULT_LIMIT_VALUE = "4";
-    private static final String DEFAULT_SORT_VALUE = "ADDED";
-
-
     @Autowired
     public IdeaController(IdeaService ideaService, UserService userService) {
         this.ideaService = ideaService;
         this.userService = userService;
     }
-
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
@@ -42,9 +34,9 @@ public class IdeaController {
     }
 
     @GetMapping("/")
-    public String getMainPage(Model model, @RequestParam(value = "page", defaultValue = DEFAULT_PAGE_VALUE) int page,
-                              @RequestParam(value = "limit", defaultValue = DEFAULT_LIMIT_VALUE) int limit,
-                              @RequestParam(value = "sort", defaultValue = DEFAULT_SORT_VALUE) SortEnum sort, HttpSession session, HttpServletRequest request) {
+    public String getMainPage(Model model, @RequestParam(value = "page", defaultValue = IdeaSettingsManager.DEFAULT_PAGE_VALUE) int page,
+                              @RequestParam(value = "limit", defaultValue = IdeaSettingsManager.DEFAULT_LIMIT_VALUE) int limit,
+                              @RequestParam(value = "sort", defaultValue = IdeaSettingsManager.DEFAULT_SORT_VALUE) SortEnum sort, HttpSession session, HttpServletRequest request) {
 
         if (request.getSession().getAttribute("sort") != null) {
             session.setAttribute("sort", SortEnum.SCORE);

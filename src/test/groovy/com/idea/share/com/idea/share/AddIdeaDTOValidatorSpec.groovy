@@ -8,9 +8,7 @@ import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll
 
-import java.util.regex.Pattern
-
-class AddIdeaValidatorSpec extends Specification {
+class AddIdeaDTOValidatorSpec extends Specification {
 
     @Subject
     IdeaDTOValidator ideaDTOValidator
@@ -40,12 +38,15 @@ class AddIdeaValidatorSpec extends Specification {
         when:
         ideaDTOValidator.validate(idea, errors)
         then:
-        TooShortTitle * errors.rejectValue("title", "idea.validator.field.tooShort");
-        TooShortDescription * errors.rejectValue("description", "idea.validator.field.tooShort");
+        TooShortTitle * errors.rejectValue("title", "idea.validator.field.tooShort")
+        TooShortDescription * errors.rejectValue("description", "idea.validator.field.tooShort")
+        InvalidCharactersInTitle * errors.rejectValue("title", "idea.validator.field.IdeaTitlePattern")
+        InvalidCharactersInDescription * errors.rejectValue("description", "idea.validator.field.IdeaDescriptionPattern")
         idea.getTitle() >> title
         idea.getDescription() >> description
         where:
-        title | description  | TooShortTitle | TooShortDescription
-        "a"   | "longenough" | 1             | 0
+        title | description  | TooShortTitle | TooShortDescription | InvalidCharactersInTitle | InvalidCharactersInDescription
+        "a"   | "longenough" | 1             | 0                   | 0                        | 0
+        "?"   | "?"          | 1             | 1                   | 1                        | 1
     }
 }

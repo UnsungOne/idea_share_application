@@ -1,6 +1,8 @@
 package com.idea.share.com.idea.share.configuration;
 
 import com.idea.share.com.idea.share.exception.IdeaException;
+import com.idea.share.com.idea.share.exception.UserException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -9,16 +11,21 @@ import org.springframework.web.servlet.ModelAndView;
 public class ExceptionHandlerController {
 
     @ExceptionHandler(value = IdeaException.class)
-    public ModelAndView IdeaException(Exception ex) {
+    public ModelAndView handleIdeaException(IdeaException ex) {
         ModelAndView mnv = new ModelAndView("errorView");
         mnv.addObject("errorMessage", ex.getMessage());
         return mnv;
     }
 
-    @ExceptionHandler(value = Exception.class)
-    public ModelAndView basicException(Exception ex) {
-        ModelAndView error = new ModelAndView("errorView");
-        error.addObject("errorMessage", ex.getMessage());
-        return error;
+    @ExceptionHandler(value = UserException.class)
+    public ModelAndView handleUserException (UserException ex) {
+        ModelAndView mnv = new ModelAndView("errorView");
+        mnv.addObject("errorMessage", ex.getMessage());
+        return mnv;
+    }
+
+    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+    public String handleHttpRequestMethodNotSupportedException() {
+        return "redirect:/";
     }
 }
