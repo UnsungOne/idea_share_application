@@ -32,7 +32,7 @@ public class AddIdeaController {
     }
 
     @GetMapping("/add")
-    public String getIdeaAddingPage(Model model, HttpSession session) {
+    public String getIdeaAddingPage(Model model) {
             model.addAttribute("idea", new Idea());
             return "add_idea";
         }

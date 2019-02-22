@@ -28,7 +28,8 @@ public class IdeaRateController {
         if (!userService.isEligibleToVote(user.getId(), request)) {
             if (!ideaService.determineIfUserIsAuthorOfGivenIdea(user.getId(), ideaId)) {
                 ideaService.rateIdeaUp(ideaId);
-                userService.makeUserAlreadyVoted(user.getId());
+                ideaService.makeGivenIdeaVotedForUser(user.getId(), ideaId);
+               // userService.makeUserAlreadyVoted(user.getId());
             }
         }
         IdeaRateDTO currentIdeaDto = ideaService.getIdeaById(ideaId);

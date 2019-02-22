@@ -1,18 +1,21 @@
 $(document).ready(function () {
 
-    var id = $('#ideaId').val();
-    var json = {"id=": id};
+//    var id = $('#ideaId').val();
+//    var json = {"id=": id};
 
-      $('#rateUp').off('click').on('click', function(){
-
-        $('#ideaForm').submit(function (event) {
+      $('body').on('click', '#rateUp', function(event){
+      console.log('click');
+         event.preventDefault();
+       var form = $(this).closest("form")
+       var id = form.find("#ideaId").val()
+       var json = {"id=": id};
 
 
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
                 url: '/idea/rateUp/' + id,
-                data: JSON.stringify(json),
+                data: json,
                 dataType: 'json',
             })
 
@@ -31,10 +34,9 @@ $(document).ready(function () {
                         "</div>");
 
                 });
-        });
 
     });
- event.preventDefault();
+
     $('#rateDown').on('click', function () {
 
         $('#ideaForm').submit(function (event) {

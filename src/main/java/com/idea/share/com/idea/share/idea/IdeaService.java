@@ -2,6 +2,7 @@ package com.idea.share.com.idea.share.idea;
 
 import com.idea.share.com.idea.share.dto.ModelMapper;
 import com.idea.share.com.idea.share.exception.IdeaNotFoundException;
+import com.idea.share.com.idea.share.exception.UserNotFoundException;
 import com.idea.share.com.idea.share.sorting.SortEnum;
 import com.idea.share.com.idea.share.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,12 +21,15 @@ import java.util.stream.Collectors;
 public class IdeaService {
 
     private IdeaRepository ideaRepository;
+    private UserVotedIdeasRepository userVotedIdeasRepository;
     private UserService userService;
 
     @Autowired
-    public IdeaService(IdeaRepository ideaRepository, UserService userService) {
+    public IdeaService(IdeaRepository ideaRepository, UserVotedIdeasRepository userVotedIdeasRepository, UserService userService) {
         this.ideaRepository = ideaRepository;
+        this.userVotedIdeasRepository = userVotedIdeasRepository;
         this.userService = userService;
+
     }
 
     public IdeaRateDTO getIdeaById(Integer id) throws IdeaNotFoundException {
@@ -77,7 +82,7 @@ public class IdeaService {
         ideaRepository.save((idea));
     }
 
-    public void updateExistingIdea(String title, String description, int id) throws Exception {
+    public void updateExistingIdea(String title, String description, int id) {
         ideaRepository.updateExistingIdea(title, description, id);
     }
 
@@ -91,10 +96,28 @@ public class IdeaService {
     }
 
     public boolean determineIfUserIsAuthorOfGivenIdea(Integer userId, Integer ideaId) {
-        List<Integer> collect = ideaRepository.getIdeasCreatedByUser(userId)
+        List<Integer> userIdeas = ideaRepository.getIdeasCreatedByUser(userId)
                 .stream()
                 .map(Idea::getId)
                 .collect(Collectors.toList());
-        return collect.contains(ideaId);
+        return userIdeas.contains(ideaId);
+    }
+
+
+    public void makeGivenIdeaVotedForUser(Integer userId, Integer ideaID) throws IdeaNotFoundException, UserNotFoundException {
+        UserVotedIdeas userVotedIdeas = new UserVotedIdeas();
+        List<Idea> allIdeas = new ArrayList<>();
+
+        for (Idea idea : ideasVotedByUsers) {
+            allIdeas.add(ideaRepository.findById(idea.getId()).orElseThrow(
+                    () ->
+                            new IdeaNotFoundException(
+                                    "Nie znaleziono produktu o id: " + idea.getId())));
+        }
+
+        userVotedIdeas.setUser(userService.findUserById(userId));
+        userVotedIdeas.setIdeas(allIdeas);
+        userVotedIdeasRepository.save(userVotedIdeas);
+
     }
 }
