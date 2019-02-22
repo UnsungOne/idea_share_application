@@ -34,13 +34,9 @@ public class LoginController {
 
     @GetMapping("/login")
     public String getLoginPage(Model model, HttpServletRequest request) {
+        model.addAttribute("user", new UserLoginDTO());
+        return "login";
 
-        if (request.getSession().getAttribute("user") != null) {
-            return "redirect:/";
-        } else {
-            model.addAttribute("user", new UserLoginDTO());
-            return "login";
-        }
     }
 
     @PostMapping("/login")
@@ -50,14 +46,9 @@ public class LoginController {
             return "login";
         }
         User loggedInUser = userService.loginUser(userLoginDTO.getEmail(), userLoginDTO.getPassword());
-        if (loggedInUser == null) {
-            return "login";
-        } else {
-            request.getSession().setAttribute("user", loggedInUser);
-            request.getSession().setAttribute("name", loggedInUser.getName());
-            return "redirect:/";
-        }
-
+        request.getSession().setAttribute("user", loggedInUser);
+        request.getSession().setAttribute("name", loggedInUser.getName());
+        return "redirect:/";
     }
 
 }

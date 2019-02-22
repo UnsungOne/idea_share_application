@@ -1,7 +1,6 @@
 package com.idea.share.com.idea.share.idea;
 
 import com.idea.share.com.idea.share.user.User;
-import com.idea.share.com.idea.share.user.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -34,15 +33,9 @@ public class AddIdeaController {
 
     @GetMapping("/add")
     public String getIdeaAddingPage(Model model, HttpSession session) {
-
-        if (session.getAttribute("user") == null) {
-            return "redirect:/";
-        } else {
-
             model.addAttribute("idea", new Idea());
             return "add_idea";
         }
-    }
 
     @PostMapping("/addIdea")
     public String addIdea(@ModelAttribute("idea") @Validated Idea idea, BindingResult bindingResult, @SessionAttribute User user, HttpServletRequest request) throws Exception {

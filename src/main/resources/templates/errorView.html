@@ -4,17 +4,15 @@
       layout:decorate="layout/layout"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
+<head>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="container main-content">
-        <div class="row">
-            <h2>Imię:</h2>
-            <h3 th:text="${user.name}"></h3>
-            <h2>E-mail:</h2>
-            <h3 th:text="${user.email}"></h3>
-        </div>
+        <p class="row">
+        <p th:text="${errorMessage}">Test</p>
     </div>
+</div>
 </div>
 </body>
 </html>

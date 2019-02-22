@@ -85,10 +85,10 @@
                     </div>
                 </form>
                 <nav aria-label="Page navigation">
-                    <hr>
-                    <ul th:if="${allPages gt 0}" class="pagination">
-                        <li th:each="i : ${#numbers.sequence(0, allPages -1)}">
-                            <a th:href="@{'/ideas/?page='}+${i}+${'&sort='}+${session.sort}" th:text="${i+1}"></a>
+                    <ul class="pagination">
+                        <li th:classappend="${currentPage}== ${i} ? 'active' : ''"
+                            th:each="i : ${#numbers.sequence(0, allPages -1)}">
+                            <a th:href="@{'ideas/?page='}+${i}+${'&sort='}+${session.sort}" th:text="${i + 1}"></a>
                         </li>
                     </ul>
                 </nav>

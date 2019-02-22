@@ -3,10 +3,10 @@ $(document).ready(function () {
     var id = $('#ideaId').val();
     var json = {"id=": id};
 
-    $('#rateUp').on('click', function () {
+      $('#rateUp').off('click').on('click', function(){
 
         $('#ideaForm').submit(function (event) {
-            event.preventDefault();
+
 
             $.ajax({
                 type: "POST",
@@ -32,8 +32,9 @@ $(document).ready(function () {
 
                 });
         });
-    });
 
+    });
+ event.preventDefault();
     $('#rateDown').on('click', function () {
 
         $('#ideaForm').submit(function (event) {

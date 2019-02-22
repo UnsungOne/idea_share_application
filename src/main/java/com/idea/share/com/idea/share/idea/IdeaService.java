@@ -1,6 +1,7 @@
 package com.idea.share.com.idea.share.idea;
 
 import com.idea.share.com.idea.share.dto.ModelMapper;
+import com.idea.share.com.idea.share.exception.IdeaNotFoundException;
 import com.idea.share.com.idea.share.sorting.SortEnum;
 import com.idea.share.com.idea.share.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,28 +21,28 @@ public class IdeaService {
     private IdeaRepository ideaRepository;
     private UserService userService;
 
-
     @Autowired
     public IdeaService(IdeaRepository ideaRepository, UserService userService) {
         this.ideaRepository = ideaRepository;
         this.userService = userService;
     }
 
-    public IdeaRateDTO getIdeaById(Integer id) throws Exception {
+    public IdeaRateDTO getIdeaById(Integer id) throws IdeaNotFoundException {
         return ideaRepository
                 .findById(id)
                 .map(ModelMapper::maoToRateDTOFromIdea)
-                .orElseThrow(() -> new Exception("Nie znaleziono produktu o id: " + id));
+                .orElseThrow(() -> new IdeaNotFoundException("Nie znaleziono pomysłu o id: " + id));
     }
 
-    public IdeaEditDTO findIdeaById(Integer id) throws Exception {
+    public IdeaEditDTO findIdeaById(Integer id) throws IdeaNotFoundException {
         return ideaRepository
                 .findById(id)
                 .map(ModelMapper::mapToIdeaEditDTOFromIdea)
-                .orElseThrow(() -> new Exception("Nie znaleziono produktu o id: " + id));
+                .orElseThrow(() -> new IdeaNotFoundException("Nie znaleziono pomysłu o id: " + id));
     }
 
     public Page<IdeaDTO> fetchMyIdeas(int user, int page, int limit, SortEnum sortPhrase, HttpSession session) {
+
         Sort sort = getSortingTypes(sortPhrase, session);
         Page<Idea> ideaEntities = ideaRepository.fetchUserIdeas(user, PageRequest.of(page, limit, sort));
         Page<IdeaDTO> ideaDTO = ideaEntities.map(ModelMapper::mapToIdeaDTOFromIdea);
@@ -49,10 +50,10 @@ public class IdeaService {
     }
 
     public Page<IdeaDTO> fetchAllIdeas(int page, int limit, SortEnum sortPhrase, HttpSession session) {
+        int resultPage = page >= 0 ? page : 0;
         Sort sort = getSortingTypes(sortPhrase, session);
-        Page<Idea> ideaEntities = ideaRepository.fetchAllActiveIdeas(PageRequest.of(page, limit, sort));
-        Page<IdeaDTO> ideaDTO = ideaEntities.map(ModelMapper::mapToIdeaDTOFromIdea);
-        return ideaDTO;
+        Page<Idea> ideaEntities = ideaRepository.fetchAllActiveIdeas(PageRequest.of(resultPage, limit, sort));
+        return ideaEntities.map(ModelMapper::mapToIdeaDTOFromIdea);
     }
 
     public Sort getSortingTypes(SortEnum sortPhrase, HttpSession session) {
@@ -92,10 +93,8 @@ public class IdeaService {
     public boolean determineIfUserIsAuthorOfGivenIdea(Integer userId, Integer ideaId) {
         List<Integer> collect = ideaRepository.getIdeasCreatedByUser(userId)
                 .stream()
-                .map(idea -> idea.getId())
+                .map(Idea::getId)
                 .collect(Collectors.toList());
-
         return collect.contains(ideaId);
     }
-
 }

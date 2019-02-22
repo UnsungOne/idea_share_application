@@ -21,14 +21,14 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="myform form">
-                    <form th:action="@{/addIdea}" method="post" th:object="${idea}">
+                    <form th:action="@{/addIdea}" method="post" th:object="${idea}" id="addIdeaForm">
                         <div class="form-group">
-                            <input type="text" th:field="*{title}" class="form-control" placeholder="Tytuł">
+                            <input type="text" th:field="*{title}" class="form-control" placeholder="Tytuł" id="title" name="title" minlength="2" maxlength="255" required>
                             <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-danger">Name Error</div>
                         </div>
                         <div class="form-group">
                             <textarea type="text" th:field="*{description}" class="form-control"
-                                      placeholder="Opis"></textarea>
+                                      placeholder="Opis" id="description" name="description" minlength="2" maxlength="255" required></textarea>
                             <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger">>Name Error</div>
                         </div>
                         <div class="text-center">

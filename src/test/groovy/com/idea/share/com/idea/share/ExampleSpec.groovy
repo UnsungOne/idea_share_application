@@ -1,20 +1,37 @@
 package com.idea.share.com.idea.share
 
+import com.idea.share.com.idea.share.user.User
 import com.idea.share.com.idea.share.user.UserService
+import spock.lang.Ignore
 import spock.lang.Specification
+import spock.lang.Subject
 
 class ExampleSpec extends Specification {
 
-    def "the test determines if a user with a given email already exists in a database"() {
+   @Subject
+   UserService userService
+   def setup() {
+        userService = new UserService()
+   }
+    @Ignore
+    def "shouldFindAGivenUser"() {
 
-        given:
-        UserService userService = Mock();
+       when:
+       def result = userService.findUserById(userId)
 
-        when:
-        String email = "kamil@example.pl"
+       then:
+        expected == expectedUsers
 
-        then:
-        userService.checkIfUserWithGivenEmailAlreadyExists(email) >> false
+        where:
+       userId << [
+               [1, 2, 3].collect( { n -> Mock(User) {
+                   getId() >> n
+               }
 
+              })
+      ]
     }
+
+    //https://stackoverflow.com/questions/46644025/spock-set-list-as-parameter-by-using-table
+
 }
