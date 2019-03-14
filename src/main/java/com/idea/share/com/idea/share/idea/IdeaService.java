@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,21 +31,21 @@ public class IdeaService {
 
     }
 
-    public IdeaRateDTO getIdeaById(Integer id) throws IdeaNotFoundException {
+    IdeaRateDTO getIdeaById(Integer id) throws IdeaNotFoundException {
         return ideaRepository
                 .findById(id)
                 .map(ModelMapper::maoToRateDTOFromIdea)
                 .orElseThrow(() -> new IdeaNotFoundException("Nie znaleziono pomysłu o id: " + id));
     }
 
-    public IdeaEditDTO findIdeaById(Integer id) throws IdeaNotFoundException {
+    IdeaEditDTO findIdeaById(Integer id) throws IdeaNotFoundException {
         return ideaRepository
                 .findById(id)
                 .map(ModelMapper::mapToIdeaEditDTOFromIdea)
                 .orElseThrow(() -> new IdeaNotFoundException("Nie znaleziono pomysłu o id: " + id));
     }
 
-    public Page<IdeaDTO> fetchMyIdeas(int user, int page, int limit, SortEnum sortPhrase, HttpSession session) {
+    Page<IdeaDTO> fetchMyIdeas(int user, int page, int limit, SortEnum sortPhrase, HttpSession session) {
 
         Sort sort = getSortingTypes(sortPhrase, session);
         Page<Idea> ideaEntities = ideaRepository.fetchUserIdeas(user, PageRequest.of(page, limit, sort));
@@ -54,14 +53,14 @@ public class IdeaService {
         return ideaDTO;
     }
 
-    public Page<IdeaDTO> fetchAllIdeas(int page, int limit, SortEnum sortPhrase, HttpSession session) {
+    Page<IdeaDTO> fetchAllIdeas(int page, int limit, SortEnum sortPhrase, HttpSession session) {
         int resultPage = page >= 0 ? page : 0;
         Sort sort = getSortingTypes(sortPhrase, session);
         Page<Idea> ideaEntities = ideaRepository.fetchAllActiveIdeas(PageRequest.of(resultPage, limit, sort));
         return ideaEntities.map(ModelMapper::mapToIdeaDTOFromIdea);
     }
 
-    public Sort getSortingTypes(SortEnum sortPhrase, HttpSession session) {
+    private Sort getSortingTypes(SortEnum sortPhrase, HttpSession session) {
         if (sortPhrase.equals(SortEnum.ADDED)) {
             session.setAttribute("sort", SortEnum.ADDED);
             return new Sort(Sort.Direction.DESC, "added");
@@ -74,7 +73,7 @@ public class IdeaService {
         }
     }
 
-    public void addIdea(Idea idea, int userId) throws Exception {
+    void addIdea(Idea idea, int userId) throws Exception {
         idea.setAdded(LocalDateTime.now());
         idea.setScore(0);
         idea.setActive(true);
@@ -82,42 +81,42 @@ public class IdeaService {
         ideaRepository.save((idea));
     }
 
-    public void updateExistingIdea(String title, String description, int id) {
+    void updateExistingIdea(String title, String description, int id) {
         ideaRepository.updateExistingIdea(title, description, id);
     }
 
-    public void rateIdeaUp(Integer ideaId) {
+    void rateIdeaUp(Integer ideaId) {
         ideaRepository.rateIdeaUp(ideaId);
     }
 
 
-    public void rateIdeaDown(Integer ideaId) {
+    void rateIdeaDown(Integer ideaId) {
         ideaRepository.rateIdeaDown(ideaId);
     }
 
-    public boolean determineIfUserIsAuthorOfGivenIdea(Integer userId, Integer ideaId) {
-        List<Integer> userIdeas = ideaRepository.getIdeasCreatedByUser(userId)
+    boolean determineIfUserIsAuthorOfGivenIdea(Integer userId, Integer ideaId) {
+        List<Integer> ideasCreatedByUser = ideaRepository.getIdeasCreatedByUser(userId)
                 .stream()
                 .map(Idea::getId)
                 .collect(Collectors.toList());
-        return userIdeas.contains(ideaId);
+        return ideasCreatedByUser.contains(ideaId);
     }
 
 
-    public void makeGivenIdeaVotedForUser(Integer userId, Integer ideaID) throws IdeaNotFoundException, UserNotFoundException {
+    void makeGivenIdeaVotedForUser(Integer userId, Integer ideaId) throws IdeaNotFoundException, UserNotFoundException {
         UserVotedIdeas userVotedIdeas = new UserVotedIdeas();
-        List<Idea> allIdeas = new ArrayList<>();
-
-        for (Idea idea : ideasVotedByUsers) {
-            allIdeas.add(ideaRepository.findById(idea.getId()).orElseThrow(
-                    () ->
-                            new IdeaNotFoundException(
-                                    "Nie znaleziono produktu o id: " + idea.getId())));
-        }
-
         userVotedIdeas.setUser(userService.findUserById(userId));
-        userVotedIdeas.setIdeas(allIdeas);
+        userVotedIdeas.setIdea(ideaRepository.findById(ideaId).get());
         userVotedIdeasRepository.save(userVotedIdeas);
 
+    }
+
+    boolean determineIfUserVotedForAGivenIdea(Integer userId, Integer ideaID) {
+        if (ideaRepository.getIdeasVotedByUser(userId).contains(ideaID)) {
+            System.out.println("ERRRRRRRRRRRR");
+            return true;
+        } else {
+            return false;
+        }
     }
 }

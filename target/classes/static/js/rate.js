@@ -1,15 +1,10 @@
 $(document).ready(function () {
 
-//    var id = $('#ideaId').val();
-//    var json = {"id=": id};
-
       $('body').on('click', '#rateUp', function(event){
-      console.log('click');
-         event.preventDefault();
+       event.preventDefault();
        var form = $(this).closest("form")
        var id = form.find("#ideaId").val()
        var json = {"id=": id};
-
 
             $.ajax({
                 type: "POST",
@@ -32,23 +27,22 @@ $(document).ready(function () {
                         "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>\n" +
                         "    <strong>Oops!</strong> Musisz się zalogować, aby móc głosować.\n" +
                         "</div>");
-
                 });
-
     });
 
-    $('#rateDown').on('click', function () {
+    $('body').on('click', '#rateDown', function(event){
+        event.preventDefault();
+           var form = $(this).closest("form")
+           var id = form.find("#ideaId").val()
+           var json = {"id=": id};
 
-        $('#ideaForm').submit(function (event) {
-            event.preventDefault();
-
-            $.ajax({
+          $.ajax({
                 type: "POST",
                 contentType: "application/json",
                 url: '/idea/rateDown/' + id,
-                data: JSON.stringify(json),
+                data: json,
                 dataType: 'json',
-            })
+           })
 
                 .done(function (idea) {
                     var respContent = "";
@@ -69,5 +63,3 @@ $(document).ready(function () {
         });
 
     });
-
-});

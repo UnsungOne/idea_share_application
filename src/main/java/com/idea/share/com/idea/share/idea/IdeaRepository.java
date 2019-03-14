@@ -38,4 +38,6 @@ public interface IdeaRepository extends PagingAndSortingRepository <Idea, Intege
     @Query(value = "SELECT * FROM ideas WHERE iduser = :entryId ", nativeQuery = true)
     List <Idea> getIdeasCreatedByUser(@Param("entryId")Integer userId);
 
+    @Query(value = "SELECT idea_id FROM user_voted_ideas WHERE user_id = :entryId ", nativeQuery = true)
+    List<Integer> getIdeasVotedByUser(@Param("entryId")Integer userId);
 }

@@ -19,14 +19,10 @@ public class UserService {
     }
 
     public boolean checkIfUserWithGivenEmailAlreadyExists(String userEmail) {
-        if (userRepository.userWithGivenEmail(userEmail) !=null) {
-            return true;
-        } else {
-            return false;
-        }
+        return userRepository.userWithGivenEmail(userEmail) != null;
     }
 
-    public void registerUser(UserDTO userDTO) {
+    void registerUser(UserDTO userDTO) {
 
         User user = ModelMapper.mapToUserFromUserDTO(userDTO);
         String password = userDTO.getPassword();

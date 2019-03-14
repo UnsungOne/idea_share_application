@@ -30,18 +30,19 @@ $(document).ready(function () {
                 });
     });
 
-    $('#rateDown').on('click', function () {
+    $('body').on('click', '#rateDown', function(event){
+        event.preventDefault();
+           var form = $(this).closest("form")
+           var id = form.find("#ideaId").val()
+           var json = {"id=": id};
 
-        $('#ideaForm').submit(function (event) {
-            event.preventDefault();
-
-            $.ajax({
+          $.ajax({
                 type: "POST",
                 contentType: "application/json",
                 url: '/idea/rateDown/' + id,
-                data: JSON.stringify(json),
+                data: json,
                 dataType: 'json',
-            })
+           })
 
                 .done(function (idea) {
                     var respContent = "";
@@ -62,5 +63,3 @@ $(document).ready(function () {
         });
 
     });
-
-});

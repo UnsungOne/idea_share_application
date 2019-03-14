@@ -4,24 +4,22 @@ import com.idea.share.com.idea.share.user.User;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Data
+@Table(name = "user_voted_ideas")
 public class UserVotedIdeas {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "iduser")
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany
-    @JoinTable (name = "user_voted_ideas",
-            joinColumns = {@JoinColumn (name = "id_user")},
-            inverseJoinColumns = {@JoinColumn(name = "id_idea")})
-    private List<Idea> ideas = new ArrayList<>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idea_id")
+    private Idea idea;
 
 }

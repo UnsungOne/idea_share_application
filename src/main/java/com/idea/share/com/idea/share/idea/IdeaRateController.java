@@ -26,10 +26,9 @@ public class IdeaRateController {
     @PostMapping(value = "/idea/rateUp/{ideaId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<IdeaRateDTO> rateIdeaUp(Model model, IdeaRateDTO ideaRateDTO, @PathVariable Integer ideaId, HttpServletRequest request, @SessionAttribute User user) throws Exception {
         if (!userService.isEligibleToVote(user.getId(), request)) {
-            if (!ideaService.determineIfUserIsAuthorOfGivenIdea(user.getId(), ideaId)) {
+            if (!ideaService.determineIfUserIsAuthorOfGivenIdea(user.getId(), ideaId) && !ideaService.determineIfUserVotedForAGivenIdea(user.getId(), ideaId)) {
                 ideaService.rateIdeaUp(ideaId);
                 ideaService.makeGivenIdeaVotedForUser(user.getId(), ideaId);
-               // userService.makeUserAlreadyVoted(user.getId());
             }
         }
         IdeaRateDTO currentIdeaDto = ideaService.getIdeaById(ideaId);
@@ -42,7 +41,7 @@ public class IdeaRateController {
         if (!userService.isEligibleToVote(user.getId(), request)) {
             if (!ideaService.determineIfUserIsAuthorOfGivenIdea(user.getId(), ideaId)) {
                 ideaService.rateIdeaDown(ideaId);
-                userService.makeUserAlreadyVoted(user.getId());
+                ideaService.makeGivenIdeaVotedForUser(user.getId(), ideaId);
             }
         }
 

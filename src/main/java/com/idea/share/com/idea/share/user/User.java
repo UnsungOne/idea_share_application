@@ -1,12 +1,14 @@
 package com.idea.share.com.idea.share.user;
 
 import com.idea.share.com.idea.share.idea.Idea;
+import com.idea.share.com.idea.share.idea.UserVotedIdeas;
 import lombok.*;
 import org.springframework.web.context.annotation.SessionScope;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -25,6 +27,8 @@ public class User {
     private boolean voted;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Idea> ideas;
+    @OneToMany(mappedBy = "user")
+    Set<UserVotedIdeas> userVotedIdeas;
 
     @Override
     public String toString() {
